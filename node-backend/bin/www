@@ -1,18 +1,26 @@
 #!/usr/bin/env node
 
+// Server File for Express - application entry point for Express
+
 /**
  * Module dependencies.
  */
 
+// require() the “real” application entry point, which is app.js,
+// that sets up and returns the express() application object
+// - app file gets loaded here.
 var app = require('../app');
+// Set the server debug and name
 var debug = require('debug')('basic-auth-app:server');
+// Load the http module
 var http = require('http');
 
 /**
  * Get port from environment and store in Express.
  */
-
+// Turns the string value of ‘3001’ into an integer
 var port = normalizePort(process.env.PORT || '3001');
+// Set the port the application should use to listen on
 app.set('port', port);
 
 /**
