@@ -1,10 +1,23 @@
 {
   "name": "basic-auth-app",
   "version": "0.0.0",
-  "private": true,
+  "private": false,
+  "type": "module",
+  "nodemonConfig": {
+    "exec": "npm start",
+    "watch": [
+      "src/*"
+    ],
+    "ignore": [
+      "**/__tests__/**",
+      "*.test.js",
+      "*.spec.js"
+    ]
+  },
   "scripts": {
-    "startdev": "node ./bin/www",
-    "start": "SET DBPORT=65535 && node ./bin/www"
+    "start": "node ./bin/www.js",
+    "start:with:db": "SET DBPORT=65535 && node ./bin/www.js",
+    "watch:dev": "nodemon"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
@@ -15,5 +28,6 @@
     "morgan": "~1.9.1",
     "njwt": "^1.0.0",
     "monk": "7.3.3"
-  }
+  },
+  "devDependencies": {}
 }
