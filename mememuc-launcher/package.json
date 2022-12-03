@@ -14,7 +14,6 @@
   "author": "LMU Mediainformatics Group",
   "license": "ISC",
   "dependencies": {
-    "concurrently": "^7.5.0",
-    "eslint": "7.32.0"
+    "concurrently": "^7.5.0"
   }
 }
