@@ -2,11 +2,9 @@
   "name": "basic-auth-app",
   "version": "0.0.0",
   "private": false,
-  "type": "module",
   "scripts": {
-    "start": "node ./bin/www.js",
-    "start:with:db": "SET DBPORT=65535 && node ./bin/www.js",
-    "watch:dev": "nodemon"
+    "startdev": "node ./bin/www",
+    "start": "SET DBPORT=65535 && node ./bin/www.js"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
