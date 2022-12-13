@@ -5,6 +5,7 @@ var router = express.Router();
 router.get('/', function(req, res, next) {
   // look in the views folder for a file that has the name of index before the extension
   res.render('index', { title: 'Express' });
+  console.log("GET index");
 });
 
 module.exports = router;

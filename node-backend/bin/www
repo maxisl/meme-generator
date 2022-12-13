@@ -58,7 +58,7 @@ function normalizePort(val) {
   return false;
 }
 
-/**
+/*
  * Event listener for HTTP server "error" event.
  */
 
@@ -96,4 +96,5 @@ function onListening() {
     ? 'pipe ' + addr
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
+  console.log('Listening on ' + bind);
 }

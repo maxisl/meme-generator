@@ -10,4 +10,6 @@ router.get('/', function(req, res, next) {
       .catch((e) => res.status(500).send())
 });
 
+// TODO Implement Basic Routing (see notes)
+
 module.exports = router;
