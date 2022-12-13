@@ -5,12 +5,26 @@ var router = express.Router();
    https://www.youtube.com/watch?v=S8kmHtQeflo */
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
+/*router.get('/', function(req, res, next) {
   res.status(200).json({
     message: "It works"
   });
   // look in the views folder for a file that has the name of index before the extension
   // res.render('index', { title: 'Express' });
+});*/
+
+// TODO add more routes https://www.youtube.com/watch?v=FV1Ugv1Temg&list=PL55RiY5tL51q4D-B63KBnygU6opNPFk_q&index=3
+
+router.get('/', (req, res, next) => {
+  res.status(200).json({
+    message: 'Handling GET requests to /index'
+  });
+});
+
+router.post('/', (req, res, next) => {
+  res.status(200).json({
+    message: 'Handling POST requests to /index'
+  });
 });
 
 module.exports = router;

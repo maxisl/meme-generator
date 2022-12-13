@@ -18,15 +18,6 @@ const usersRouter = require('./routes/users');
 
 const app = express();
 
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
-
-app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({extended: false}));
-app.use(cookieParser());
-
 // add swagger ui
 const swaggerUi = require('swagger-ui-express');
 const swaggerJsDoc = require("swagger-jsdoc")
@@ -51,6 +42,16 @@ const options = {
 
 const specs = swaggerJsDoc(options);
 
+// view engine setup
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'jade');
+
+app.use(logger('dev'));
+app.use(express.json());
+app.use(express.urlencoded({extended: false}));
+app.use(cookieParser());
+
+// enable swagger: http://localhost:3001/api-docs
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 
 app.use(function (req, res, next) {
@@ -58,15 +59,16 @@ app.use(function (req, res, next) {
     next();
 });
 
-// test func to see if server works => go to http://localhost:3001
+/*// test func to see if server works => go to http://localhost:3001
 app.use((req, res, next) => {
     res.status(200).json({
         message: "It works"
     });
-});
+});*/
 
 // the login middleware. Requires BasicAuth authentication
-app.use((req, res, next) => {
+// TODO deactivated due to missing authentication
+/*app.use((req, res, next) => {
     const users = db.get('users');
     users.findOne({basicauthtoken: req.headers.authorization}).then(user => {
         if (user) {
@@ -81,7 +83,7 @@ app.use((req, res, next) => {
         res.set('WWW-Authenticate', 'Basic realm="401"')
         res.status(401).send()
     })
-})
+})*/
 
 
 app.use(express.static(path.join(__dirname, 'public')));
