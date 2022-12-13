@@ -7,13 +7,17 @@
     "start": "SET DBPORT=65535 && node ./bin/www.js"
   },
   "dependencies": {
+    "call-me-maybe": "^1.0.2",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
     "express": "~4.16.1",
     "http-errors": "~1.6.3",
     "jade": "~1.11.0",
+    "monk": "7.3.3",
     "morgan": "~1.9.1",
+    "nanoid": "^4.0.0",
     "njwt": "^1.0.0",
-    "monk": "7.3.3"
+    "swagger-jsdoc": "^6.2.5",
+    "swagger-ui-express": "^4.6.0"
   }
 }

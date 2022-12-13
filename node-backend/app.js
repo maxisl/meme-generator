@@ -3,6 +3,7 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+// const {nanoid} = require('nanoid');
 
 // ##### IMPORTANT
 // ### Your backend project has to switch the MongoDB port like this
@@ -25,6 +26,32 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
+
+// add swagger ui
+const swaggerUi = require('swagger-ui-express');
+const swaggerJsDoc = require("swagger-jsdoc")
+
+// swagger options (config)
+const options = {
+    definition: {
+        openapi: "3.0.0",
+        info: {
+            title: "Meme Generator API",
+            version: "1.0.0",
+            description: "Express Meme Generator API"
+        },
+        servers: [
+            {
+                url: "http://localhost:3001"
+            }
+        ]
+    },
+    apis: ["./routes/*.js"]
+};
+
+const specs = swaggerJsDoc(options);
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 
 app.use(function (req, res, next) {
     req.db = db;

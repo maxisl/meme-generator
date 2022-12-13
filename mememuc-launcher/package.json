@@ -14,6 +14,7 @@
   "author": "LMU Mediainformatics Group",
   "license": "ISC",
   "dependencies": {
-    "concurrently": "^7.5.0"
+    "concurrently": "^7.5.0",
+    "swagger-ui-express": "^4.6.0"
   }
 }
