@@ -3,6 +3,7 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+const cors = require('cors');
 // use nanoid to generate id?
 // const {nanoid} = require('nanoid');
 
@@ -48,6 +49,7 @@ const specs = swaggerJsDoc(options);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
+app.use(cors());
 app.use(logger('dev'));
 // extract json data and make it usable
 app.use(express.json());
