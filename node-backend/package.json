@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": false,
   "scripts": {
-    "startdev": "node ./bin/www",
+    "startdev": "nodemon ./bin/www",
     "start": "SET DBPORT=65535 && node ./bin/www.js"
   },
   "dependencies": {
@@ -19,5 +19,8 @@
     "njwt": "^1.0.0",
     "swagger-jsdoc": "^6.2.5",
     "swagger-ui-express": "^4.6.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.20"
   }
 }

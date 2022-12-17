@@ -34,7 +34,7 @@ router.get('/:memeId', (req, res, next) => {
     const id = req.params.memeId;
     if (id === 'fav') {
         res.status(200).json({
-            message: "You found the fav meme"
+            message: "You found the fav meme!"
         });
     } else {
         res.status(200).json({
