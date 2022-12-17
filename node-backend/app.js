@@ -3,6 +3,7 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+// use nanoid to generate id?
 // const {nanoid} = require('nanoid');
 
 // ##### IMPORTANT
@@ -48,7 +49,9 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
 app.use(logger('dev'));
+// extract json data and make it usable
 app.use(express.json());
+// method inbuilt in express to recognize the incoming Request Object as strings or arrays
 app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
 
@@ -61,7 +64,7 @@ app.use(function (req, res, next) {
 });
 
 // the login middleware. Requires BasicAuth authentication
-// TODO deactivated due to missing authentication
+// TODO move to index?  deactivated due to missing authentication
 /*app.use((req, res, next) => {
     const users = db.get('users');
     users.findOne({basicauthtoken: req.headers.authorization}).then(user => {

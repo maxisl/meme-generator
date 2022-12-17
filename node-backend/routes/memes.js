@@ -1,4 +1,5 @@
 var express = require('express');
+const {id} = require("monk");
 var router = express.Router();
 
 /* TODO GET memes listing. */
@@ -53,8 +54,13 @@ TODO MEMES POST
 */
 
 router.post('/', (req, res, next) => {
+    const meme = {
+        name: req.body.name,
+        memeId: req.body.id
+    }
     res.status(201).json({
-        message: 'Handling POST requests to /memes'
+        message: 'Handling POST requests to /memes',
+        createdMeme: meme
     });
 });
 
