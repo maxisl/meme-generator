@@ -15,6 +15,7 @@ console.log(`Connected to MongoDB at port ${MONGODB_PORT}`)
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
+const memesRouter = require('./routes/memes');
 
 const app = express();
 
@@ -59,13 +60,6 @@ app.use(function (req, res, next) {
     next();
 });
 
-/*// test func to see if server works => go to http://localhost:3001
-app.use((req, res, next) => {
-    res.status(200).json({
-        message: "It works"
-    });
-});*/
-
 // the login middleware. Requires BasicAuth authentication
 // TODO deactivated due to missing authentication
 /*app.use((req, res, next) => {
@@ -89,6 +83,7 @@ app.use((req, res, next) => {
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/memes', memesRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

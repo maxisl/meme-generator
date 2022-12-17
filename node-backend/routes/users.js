@@ -17,12 +17,12 @@ router.get('/', (req, res, next) => {
 });
 
 router.post('/', (req, res, next) => {
-    res.status(200).json({
-        message: 'Handling POST requests to /index'
+    res.status(201).json({
+        message: 'Handling POST requests to /users'
     });
 });
 
-router.get('/:userId', (req, res, next) => {
+router.get('/:memeId', (req, res, next) => {
     const id = req.params.userId;
     if (id === 'fav') {
         res.status(200).json({
