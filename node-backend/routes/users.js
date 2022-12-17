@@ -11,10 +11,29 @@ var router = express.Router();
 });*/
 
 router.get('/', (req, res, next) => {
-  res.status(200).json({
-    message: 'Handling GET requests to /users'
-  });
+    res.status(200).json({
+        message: 'Handling GET requests to /users'
+    });
 });
+
+router.post('/', (req, res, next) => {
+    res.status(200).json({
+        message: 'Handling POST requests to /index'
+    });
+});
+
+router.get('/:userId', (req, res, next) => {
+    const id = req.params.userId;
+    if (id === 'fav') {
+        res.status(200).json({
+            message: "You found the fav one"
+        });
+    } else {
+        res.status(200).json({
+            message: "You found user with id: " + id,
+        });
+    }
+})
 
 // TODO Implement Basic Routing (see notes)
 
