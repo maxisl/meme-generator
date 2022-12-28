@@ -68,20 +68,28 @@ app.use(function (req, res, next) {
 // the login middleware. Requires BasicAuth authentication
 // TODO move to index?  deactivated due to missing authentication
 /*app.use((req, res, next) => {
-    const users = db.get('users');
-    users.findOne({basicauthtoken: req.headers.authorization}).then(user => {
-        if (user) {
-            req.username = user.username;  // test test => Basic dGVzdDp0ZXN0
-            next()
-        } else {
-            res.set('WWW-Authenticate', 'Basic realm="401"')
-            res.status(401).send()
+        const users = db.get('users');
+        if (users) {
+            console.log("found users");
         }
-    }).catch(e => {
-        console.error(e)
+    }
+)*/
+
+/*
+
+users.findOne({basicauthtoken: req.headers.authorization}).then(user => {
+    if (user) {
+        req.username = user.username;  // test test => Basic dGVzdDp0ZXN0
+        next()
+    } else {
         res.set('WWW-Authenticate', 'Basic realm="401"')
         res.status(401).send()
-    })
+    }
+}).catch(e => {
+    console.error(e)
+    res.set('WWW-Authenticate', 'Basic realm="401"')
+    res.status(401).send()
+})
 })*/
 
 
