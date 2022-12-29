@@ -1,5 +1,7 @@
 var express = require('express');
 var router = express.Router();
+const mongoose = require('mongoose');
+const User = require('../models/user');
 
 /* GET users listing. */
 /*router.get('/', function (req, res, next) {
@@ -11,37 +13,44 @@ var router = express.Router();
 });*/
 
 router.get('/', (req, res, next) => {
-    const db = req.db;
-    const users = db.get('users');
-    users.find({}, function (err, docs) {
-        console.log(docs);
-    })
-        .then((docs) => res.json(docs))
-        .catch((e) => res.status(500).send())
+    User.find((error, users) => {
+        if (error) {
+            res.send(error);
+        } else {
+            res.send(users);
+        }
+    });
 });
 
 router.post('/', (req, res, next) => {
-    const db = req.db;
-    const users = db.get('users');
-    users.insert({username: 'John1 Smith'}, function (err, doc) {
-        console.log('User added:', doc);
+    const user = new User({
+        _id: new mongoose.Types.ObjectId(),
+        name: req.body.name,
+        email: req.body.email,
+        password: req.body.password
     });
-    res.status(201).json({
-        message: 'Handling POST requests to /users'
+
+    user.save((error) => {
+        if (error) {
+            res.send(error);
+        } else {
+            console.log(user);
+            res.status(201).json({
+                message: "User created"
+            });
+        }
     });
 });
 
-router.get('/:memeId', (req, res, next) => {
-    const id = req.params.userId;
-    if (id === 'fav') {
-        res.status(200).json({
-            message: "You found the fav one"
-        });
-    } else {
-        res.status(200).json({
-            message: "You found user with id: " + id,
-        });
-    }
+// TODO fix - does not delete user even though response code 200
+router.delete('/:userId', (req, res, next) => {
+    User.findByIdAndDelete(req.path.userId, (error) => {
+        if (error) {
+            res.send(error);
+        } else {
+            res.send('User deleted successfully');
+        }
+    });
 })
 
 // TODO Implement Basic Routing (see notes)
