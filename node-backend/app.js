@@ -4,6 +4,7 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const cors = require('cors');
+const mongoose = require('mongoose');
 // use nanoid to generate id?
 // const {nanoid} = require('nanoid');
 
@@ -11,8 +12,20 @@ const cors = require('cors');
 // ### Your backend project has to switch the MongoDB port like this
 // ### Thus copy paste this block to your project
 const MONGODB_PORT = process.env.DBPORT || '27017';
-const db = require('monk')(`127.0.0.1:${MONGODB_PORT}/omm-2223`); // connect to database omm-2021
-console.log(`Connected to MongoDB at port ${MONGODB_PORT}`)
+// const db = require('monk')(`127.0.0.1:${MONGODB_PORT}/omm-2223`); // connect to database omm-2021
+mongoose.set('strictQuery', false);
+mongoose.connect(`mongodb://127.0.0.1:${MONGODB_PORT}/omm-2223`, {useNewUrlParser: true});
+const db = mongoose.connection;
+
+// test mongoose connection
+db.once('open', () => {
+    console.log(`Successfully connected to Connected to MongoDB on port ${MONGODB_PORT}`);
+});
+
+db.on('error', (error) => {
+    console.error(error);
+});
+
 // ######
 
 const indexRouter = require('./routes/index');
