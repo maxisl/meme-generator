@@ -42,16 +42,15 @@ router.post('/', (req, res, next) => {
     });
 });
 
-// TODO fix - does not delete user even though response code 200
-router.delete('/:userId', (req, res, next) => {
-    User.findByIdAndDelete(req.path.userId, (error) => {
-        if (error) {
-            res.send(error);
-        } else {
-            res.send('User deleted successfully');
-        }
-    });
-})
+router.delete('/:userId', async (req, res, next) => {
+    try {
+        const userId = req.params.userId;
+        const user = await User.findByIdAndDelete(userId);
+        res.send(`Deleted user: ${user}`);
+    } catch (error) {
+        res.status(500).send(error);
+    }
+});
 
 // TODO Implement Basic Routing (see notes)
 
