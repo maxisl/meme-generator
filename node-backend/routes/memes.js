@@ -1,5 +1,5 @@
-var express = require('express');
-const {id} = require("monk");
+var express = require("express");
+const { id } = require("monk");
 var router = express.Router();
 
 /* TODO GET memes listing. */
@@ -24,25 +24,25 @@ TODO MEMES GET
 */
 
 // GET ALL MEMES
-router.get('/', (req, res, next) => {
-    res.status(200).json({
-        message: 'Handling GET requests to /memes'
-    });
+router.get("/", (req, res, next) => {
+  res.status(200).json({
+    message: "Handling GET requests to /memes",
+  });
 });
 
 // GET MEME BY ID
-router.get('/:memeId', (req, res, next) => {
-    const id = req.params.memeId;
-    if (id === 'fav') {
-        res.status(200).json({
-            message: "You found the fav meme!"
-        });
-    } else {
-        res.status(200).json({
-            message: "You found meme with id: " + id,
-        });
-    }
-})
+router.get("/:memeId", (req, res, next) => {
+  const id = req.params.memeId;
+  if (id === "fav") {
+    res.status(200).json({
+      message: "You found the fav meme!",
+    });
+  } else {
+    res.status(200).json({
+      message: "You found meme with id: " + id,
+    });
+  }
+});
 
 /*
 TODO MEMES POST
@@ -53,15 +53,15 @@ TODO MEMES POST
 5. CreateMemeByConfig    (/config)            - requires Auth
 */
 
-router.post('/', (req, res, next) => {
-    const meme = {
-        name: req.body.name,
-        memeId: req.body.id
-    }
-    res.status(201).json({
-        message: 'Handling POST requests to /memes',
-        createdMeme: meme
-    });
+router.post("/", (req, res, next) => {
+  const meme = {
+    name: req.body.name,
+    memeId: req.body.id,
+  };
+  res.status(201).json({
+    message: "Handling POST requests to /memes",
+    createdMeme: meme,
+  });
 });
 
 /*
@@ -69,10 +69,10 @@ TODO DELETE MEMES
 1. DeleteMemeById       (/:id)      - requires Auth
  */
 
-router.delete('/:memeId', (req, res, next) => {
-    res.status(200).json({
-        message: 'Handling DELETE requests to /memes'
-    });
+router.delete("/:memeId", (req, res, next) => {
+  res.status(200).json({
+    message: "Handling DELETE requests to /memes",
+  });
 });
 
 /*
@@ -80,10 +80,10 @@ TODO PATCH MEMES
 1. UpdateMemeById       (/:id)      - requires Auth
  */
 
-router.patch('/:memeId', (req, res, next) => {
-    res.status(200).json({
-        message: 'Handling PATCH (update) requests to /memes'
-    });
+router.patch("/:memeId", (req, res, next) => {
+  res.status(200).json({
+    message: "Handling PATCH (update) requests to /memes",
+  });
 });
 
 module.exports = router;

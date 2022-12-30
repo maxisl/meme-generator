@@ -1,7 +1,7 @@
-var express = require('express');
+var express = require("express");
 var router = express.Router();
-const mongoose = require('mongoose');
-const User = require('../models/user');
+const mongoose = require("mongoose");
+const User = require("../models/user");
 
 /* GET users listing. */
 /*router.get('/', function (req, res, next) {
@@ -12,44 +12,44 @@ const User = require('../models/user');
         .catch((e) => res.status(500).send())
 });*/
 
-router.get('/', (req, res, next) => {
-    User.find((error, users) => {
-        if (error) {
-            res.send(error);
-        } else {
-            res.send(users);
-        }
-    });
-});
-
-router.post('/', (req, res, next) => {
-    const user = new User({
-        _id: new mongoose.Types.ObjectId(),
-        name: req.body.name,
-        email: req.body.email,
-        password: req.body.password
-    });
-
-    user.save((error) => {
-        if (error) {
-            res.send(error);
-        } else {
-            console.log(user);
-            res.status(201).json({
-                message: "User created"
-            });
-        }
-    });
-});
-
-router.delete('/:userId', async (req, res, next) => {
-    try {
-        const userId = req.params.userId;
-        const user = await User.findByIdAndDelete(userId);
-        res.send(`Deleted user: ${user}`);
-    } catch (error) {
-        res.status(500).send(error);
+router.get("/", (req, res, next) => {
+  User.find((error, users) => {
+    if (error) {
+      res.send(error);
+    } else {
+      res.send(users);
     }
+  });
+});
+
+router.post("/", (req, res, next) => {
+  const user = new User({
+    _id: new mongoose.Types.ObjectId(),
+    name: req.body.name,
+    email: req.body.email,
+    password: req.body.password,
+  });
+
+  user.save((error) => {
+    if (error) {
+      res.send(error);
+    } else {
+      console.log(user);
+      res.status(201).json({
+        message: "User created",
+      });
+    }
+  });
+});
+
+router.delete("/:userId", async (req, res, next) => {
+  try {
+    const userId = req.params.userId;
+    const user = await User.findByIdAndDelete(userId);
+    res.send(`Deleted user: ${user}`);
+  } catch (error) {
+    res.status(500).send(error);
+  }
 });
 
 // TODO Implement Basic Routing (see notes)
