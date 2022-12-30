@@ -1,0 +1,16 @@
+{
+  "name": "mememuc-ms",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "format": "prettier --write \"node-backend/**/*.{js,jsx,ts,tsx}\" \"react-frontend/**/*.{js,jsx,ts,tsx}\"",
+    "lint": "eslint \"node-backend/**/*.{js,jsx}\" \"react-frontend/**/*.{js,jsx}\" --quiet"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "^8.24.0",
+    "eslint-config-prettier": "^8.5.0",
+    "prettier": "^2.7.1"
+  }
+}

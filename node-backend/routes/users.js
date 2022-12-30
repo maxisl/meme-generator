@@ -12,7 +12,7 @@ const User = require("../models/user");
         .catch((e) => res.status(500).send())
 });*/
 
-router.get("/", (req, res, next) => {
+router.get("/", (req, res) => {
   User.find((error, users) => {
     if (error) {
       res.send(error);
@@ -22,7 +22,7 @@ router.get("/", (req, res, next) => {
   });
 });
 
-router.post("/", (req, res, next) => {
+router.post("/", (req, res) => {
   const user = new User({
     _id: new mongoose.Types.ObjectId(),
     name: req.body.name,
@@ -42,7 +42,7 @@ router.post("/", (req, res, next) => {
   });
 });
 
-router.delete("/:userId", async (req, res, next) => {
+router.delete("/:userId", async (req, res) => {
   try {
     const userId = req.params.userId;
     const user = await User.findByIdAndDelete(userId);
