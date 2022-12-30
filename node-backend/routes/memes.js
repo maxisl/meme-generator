@@ -64,7 +64,7 @@ router.post("/", (req, res) => {
 });
 
 /*
-TODO DELETE MEMES
+TODO MEMES DELETE
 1. DeleteMemeById       (/:id)      - requires Auth
  */
 
