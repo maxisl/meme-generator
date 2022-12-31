@@ -5,7 +5,6 @@ const Schema = mongoose.Schema;
 const now = new Date();
 // add 1 hour to get correct timestamp
 now.setTime(Date.now() + 1 * 60 * 60 * 1000);
-console.log(now);
 
 const memeSchema = new Schema({
   _id: mongoose.Schema.Types.ObjectId,

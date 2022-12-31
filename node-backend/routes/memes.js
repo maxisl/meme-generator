@@ -8,7 +8,6 @@ const mongoose = require("mongoose");
 const now = new Date();
 // add 1 hour to get correct timestamp
 now.setTime(Date.now() + 1 * 60 * 60 * 1000);
-console.log(now);
 
 /* TODO GET memes listing. */
 /*router.get('/', function(req, res, next) {
@@ -36,6 +35,20 @@ router.get("/", async (req, res) => {
   try {
     const memes = await Meme.find();
     res.send(memes);
+  } catch (error) {
+    res.status(500).send(error);
+  }
+});
+
+// GET RANDOM MEME
+router.get("/random", async (req, res) => {
+  try {
+    const randomMeme = await Meme.aggregate([{ $sample: { size: 1 } }]);
+    if (!randomMeme) {
+      res.status(404).send("No memes found");
+    } else {
+      res.send(randomMeme[0]);
+    }
   } catch (error) {
     res.status(500).send(error);
   }
