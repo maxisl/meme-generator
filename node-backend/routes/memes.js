@@ -1,5 +1,8 @@
 var express = require("express");
 var router = express.Router();
+const Meme = require("../models/meme");
+const User = require("../models/user");
+const mongoose = require("mongoose");
 
 /* TODO GET memes listing. */
 /*router.get('/', function(req, res, next) {
@@ -23,10 +26,13 @@ TODO MEMES GET
 */
 
 // GET ALL MEMES
-router.get("/", (req, res) => {
-  res.status(200).json({
-    message: "Handling GET requests to /memes",
-  });
+router.get("/", async (req, res) => {
+  try {
+    const memes = await Meme.find();
+    res.send(memes);
+  } catch (error) {
+    res.status(500).send(error);
+  }
 });
 
 // GET MEME BY ID
@@ -52,15 +58,22 @@ TODO MEMES POST
 5. CreateMemeByConfig    (/config)            - requires Auth
 */
 
-router.post("/", (req, res) => {
-  const meme = {
-    name: req.body.name,
-    memeId: req.body.id,
-  };
-  res.status(201).json({
-    message: "Handling POST requests to /memes",
-    createdMeme: meme,
+router.post("/", async (req, res) => {
+  const meme = new Meme({
+    _id: new mongoose.Types.ObjectId(),
+    title: req.body.title,
+    image: req.body.image,
+    tags: req.body.tags,
+    likes: req.body.tags,
+    comments: req.body.comments,
   });
+  console.log("Executed POST route");
+  try {
+    const savedMeme = await meme.save();
+    res.send(savedMeme);
+  } catch (error) {
+    res.status(500).send(error);
+  }
 });
 
 /*
@@ -68,10 +81,14 @@ TODO MEMES DELETE
 1. DeleteMemeById       (/:id)      - requires Auth
  */
 
-router.delete("/:memeId", (req, res) => {
-  res.status(200).json({
-    message: "Handling DELETE requests to /memes",
-  });
+router.delete("/:memeId", async (req, res) => {
+  try {
+    const memeId = req.params.memeId;
+    const meme = await Meme.findByIdAndDelete(memeId);
+    res.send(`Deleted user: ${meme}`);
+  } catch (error) {
+    res.status(500).send(error);
+  }
 });
 
 /*
