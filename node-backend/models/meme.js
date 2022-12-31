@@ -34,10 +34,11 @@ const memeSchema = new Schema({
       author: {
         type: String,
         required: true,
+        default: "unknown",
       },
       date: {
         type: Date,
-        default: Date.now,
+        default: now,
       },
     },
   ],
