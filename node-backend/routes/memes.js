@@ -4,6 +4,12 @@ const Meme = require("../models/meme");
 const User = require("../models/user");
 const mongoose = require("mongoose");
 
+// change now to current timestamp in the GMT+1 time zone
+const now = new Date();
+// add 1 hour to get correct timestamp
+now.setTime(Date.now() + 1 * 60 * 60 * 1000);
+console.log(now);
+
 /* TODO GET memes listing. */
 /*router.get('/', function(req, res, next) {
   const db = req.db;
@@ -36,16 +42,16 @@ router.get("/", async (req, res) => {
 });
 
 // GET MEME BY ID
-router.get("/:memeId", (req, res) => {
-  const id = req.params.memeId;
-  if (id === "fav") {
-    res.status(200).json({
-      message: "You found the fav meme!",
-    });
-  } else {
-    res.status(200).json({
-      message: "You found meme with id: " + id,
-    });
+router.get("/:memeId", async (req, res) => {
+  try {
+    const meme = await Meme.findById(req.params.memeId);
+    if (!meme) {
+      res.status(404).send("Meme not found");
+    } else {
+      res.send(meme);
+    }
+  } catch (error) {
+    res.status(500).send(error);
   }
 });
 
@@ -64,10 +70,9 @@ router.post("/", async (req, res) => {
     title: req.body.title,
     image: req.body.image,
     tags: req.body.tags,
-    likes: req.body.tags,
+    likes: req.body.likes,
     comments: req.body.comments,
   });
-  console.log("Executed POST route");
   try {
     const savedMeme = await meme.save();
     res.send(savedMeme);
@@ -96,10 +101,20 @@ TODO PATCH MEMES
 1. UpdateMemeById       (/:id)      - requires Auth
  */
 
-router.patch("/:memeId", (req, res) => {
-  res.status(200).json({
-    message: "Handling PATCH (update) requests to /memes",
-  });
+router.patch("/:memeId", async (req, res) => {
+  try {
+    req.body.updatedAt = now;
+    const meme = await Meme.findByIdAndUpdate(req.params.memeId, req.body, {
+      new: true,
+    });
+    if (!meme) {
+      res.status(404).send("Meme not found");
+    } else {
+      res.send(meme);
+    }
+  } catch (error) {
+    res.status(500).send(error);
+  }
 });
 
 module.exports = router;

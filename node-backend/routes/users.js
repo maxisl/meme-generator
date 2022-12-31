@@ -52,6 +52,4 @@ router.delete("/:userId", async (req, res) => {
   }
 });
 
-// TODO Implement Basic Routing (see notes)
-
 module.exports = router;

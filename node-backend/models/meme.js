@@ -1,6 +1,12 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
+// change now to current timestamp in the GMT+1 time zone
+const now = new Date();
+// add 1 hour to get correct timestamp
+now.setTime(Date.now() + 1 * 60 * 60 * 1000);
+console.log(now);
+
 const memeSchema = new Schema({
   _id: mongoose.Schema.Types.ObjectId,
   title: {
@@ -38,11 +44,11 @@ const memeSchema = new Schema({
   ],
   createdAt: {
     type: Date,
-    default: Date.now,
+    default: now,
   },
   updatedAt: {
     type: Date,
-    default: Date.now,
+    default: now,
   },
 });
 
