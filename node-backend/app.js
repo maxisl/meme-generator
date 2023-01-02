@@ -54,12 +54,84 @@ const options = {
     servers: [
       {
         url: "http://localhost:3001",
+        description: "local server",
       },
     ],
+    components: {
+      securitySchemes: {
+        bearerAuth: {
+          type: "http",
+          scheme: "bearer",
+          bearerFormat: "JWT",
+        },
+      },
+    },
+    definitions: {
+      Meme: {
+        type: "object",
+        properties: {
+          id: {
+            type: "string",
+            description: "Meme's unique ID",
+          },
+          title: {
+            type: "string",
+            description: "Meme's title",
+          },
+          imageUrl: {
+            type: "string",
+            description: "URL of the meme image",
+          },
+          description: {
+            type: "string",
+            description: "Meme's description",
+          },
+          likes: {
+            type: "integer",
+            description: "Number of likes for the meme",
+          },
+          createdAt: {
+            type: "string",
+            format: "date-time",
+            description: "Timestamp when the meme was created",
+          },
+          updatedAt: {
+            type: "string",
+            format: "date-time",
+            description: "Timestamp when the meme was last updated",
+          },
+          comments: {
+            type: "array",
+            items: {
+              $ref: "#/definitions/Comment",
+            },
+          },
+        },
+      },
+      Comment: {
+        type: "object",
+        properties: {
+          id: {
+            type: "string",
+            description: "Comment's unique ID",
+          },
+          text: {
+            type: "string",
+            description: "Comment's text",
+          },
+          timestamp: {
+            type: "string",
+            format: "date-time",
+            description: "Timestamp when the comment was created",
+          },
+        },
+      },
+    },
   },
   apis: ["./routes/*.js"],
 };
 
+// // generate the Swagger document
 const specs = swaggerJsDoc(options);
 
 // view engine setup

@@ -1,7 +1,6 @@
 var express = require("express");
 var router = express.Router();
 const Meme = require("../models/meme");
-const User = require("../models/user");
 const mongoose = require("mongoose");
 
 // change now to current timestamp in the GMT+1 time zone
@@ -30,6 +29,26 @@ TODO MEMES GET
 8. GetFavoriteMemes         (/faves)        - requires Auth
 */
 
+/**
+ * @swagger
+ * /memes/:
+ *   get:
+ *     tags:
+ *       - memes
+ *     summary: Get all memes
+ *     description: Returns an array of all memes in the collection
+ *     responses:
+ *       200:
+ *         description: Success
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: "#/definitions/Meme"
+ *       500:
+ *         description: Internal Server Error
+ */
 // GET ALL MEMES
 router.get("/", async (req, res) => {
   try {
@@ -40,6 +59,24 @@ router.get("/", async (req, res) => {
   }
 });
 
+/**
+ * @swagger
+ * /memes/random:
+ *   get:
+ *     tags:
+ *       - memes
+ *     summary: Get a random meme
+ *     description: Returns a random meme in the collection
+ *     responses:
+ *       200:
+ *         description: Success
+ *         schema:
+ *           $ref: '#/definitions/Meme'
+ *       404:
+ *         description: No memes found
+ *       500:
+ *         description: Internal server error
+ */
 // GET RANDOM MEME
 router.get("/random", async (req, res) => {
   try {
@@ -53,6 +90,34 @@ router.get("/random", async (req, res) => {
     res.status(500).send(error);
   }
 });
+
+/**
+ * @swagger
+ * /memes/{memeId}:
+ *   get:
+ *     tags:
+ *       - memes
+ *     summary: Get meme by ID
+ *     description: Returns the meme with the specified ID
+ *     parameters:
+ *       - in: path
+ *         name: memeId
+ *         required: true
+ *         schema:
+ *           type: string
+ *           description: ID of the meme to retrieve
+ *     responses:
+ *       200:
+ *         description: Success
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/definitions/Meme"
+ *       404:
+ *         description: Meme not found
+ *       500:
+ *         description: Internal Server Error
+ */
 
 // GET MEME BY ID
 router.get("/:memeId", async (req, res) => {
