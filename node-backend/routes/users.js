@@ -11,7 +11,15 @@ const User = require("../models/user");
         .then((docs) => res.json(docs))
         .catch((e) => res.status(500).send())
 });*/
+/*
+TODO USERS GET
+1. GetAll                   (/)
+2. GetUserById              (/:id)
+3. GetUserMemes             (/memes)
+4. GetUserTemplates         (/templates.js)
+*/
 
+// GET ALL USERS
 router.get("/", (req, res) => {
   User.find((error, users) => {
     if (error) {
@@ -22,6 +30,12 @@ router.get("/", (req, res) => {
   });
 });
 
+/*
+TODO USERS POST
+1. CreateUser                   (/)
+*/
+
+// CREATE NEW USER
 router.post("/", (req, res) => {
   const user = new User({
     _id: new mongoose.Types.ObjectId(),
@@ -42,6 +56,12 @@ router.post("/", (req, res) => {
   });
 });
 
+/*
+TODO USERS DELETE
+1. DeleteUser                   (/)
+*/
+
+// DELETE USER
 router.delete("/:userId", async (req, res) => {
   try {
     const userId = req.params.userId;
