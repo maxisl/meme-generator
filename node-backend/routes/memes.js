@@ -118,7 +118,6 @@ router.get("/random", async (req, res) => {
  *       500:
  *         description: Internal Server Error
  */
-
 // GET MEME BY ID
 router.get("/:memeId", async (req, res) => {
   try {
@@ -142,6 +141,30 @@ TODO MEMES POST
 5. CreateMemeByConfig    (/config)            - requires Auth
 */
 
+/**
+ * @swagger
+ * /memes/:
+ *   post:
+ *     tags:
+ *       - memes
+ *     summary: Create a new meme
+ *     description: Creates a new meme in the collection
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: "#/definitions/NewMeme"
+ *     responses:
+ *       201:
+ *         description: Created
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/definitions/Meme"
+ *       500:
+ *         description: Internal Server Error
+ */
 // POST MEME
 router.post("/", async (req, res) => {
   const meme = new Meme({
@@ -160,6 +183,47 @@ router.post("/", async (req, res) => {
   }
 });
 
+/**
+ * @swagger
+ * /memes/{memeId}/comment:
+ *   post:
+ *     tags:
+ *       - memes
+ *     summary: Add a comment to a meme
+ *     description: Adds a comment to the specified meme in the collection
+ *     parameters:
+ *       - in: path
+ *         name: memeId
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: The ID of the meme to add a comment to
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - text
+ *             properties:
+ *               text:
+ *                 type: string
+ *                 description: The text of the comment
+ *     responses:
+ *       200:
+ *         description: Successfully added the comment to the meme
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/definitions/Meme"
+ *       400:
+ *         description: Invalid request body
+ *       404:
+ *         description: Meme not found
+ *       500:
+ *         description: Internal server error
+ */
 // POST COMMENT ON MEME
 router.post("/:memeId/comment", async (req, res) => {
   try {
@@ -187,6 +251,36 @@ TODO MEMES DELETE
 1. DeleteMemeById       (/:id)      - requires Auth
  */
 
+/**
+ * @swagger
+ * /memes/{memeId}:
+ *   delete:
+ *     tags:
+ *       - memes
+ *     summary: Delete a meme
+ *     description: Deletes the specified meme from the collection
+ *     parameters:
+ *       - in: path
+ *         name: memeId
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: The ID of the meme to delete
+ *     responses:
+ *       200:
+ *         description: Successfully deleted the meme
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: The message indicating the success of the delete operation
+ *       500:
+ *         description: Internal server error
+ */
+// DELETE MEME BY ID
 router.delete("/:memeId", async (req, res) => {
   try {
     const memeId = req.params.memeId;
@@ -202,6 +296,40 @@ TODO PATCH MEMES
 1. UpdateMemeById       (/:id)      - requires Auth
  */
 
+/**
+ * @swagger
+ * /memes/{memeId}:
+ *   patch:
+ *     tags:
+ *       - memes
+ *     summary: Update a meme
+ *     description: Updates the specified meme in the collection
+ *     parameters:
+ *       - in: path
+ *         name: memeId
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: The ID of the meme to update
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: "#/definitions/Meme"
+ *     responses:
+ *       200:
+ *         description: Successfully updated the meme
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: "#/definitions/Meme"
+ *       404:
+ *         description: Meme not found
+ *       500:
+ *         description: Internal server error
+ */
+// UPDATE MEME BY ID
 router.patch("/:memeId", async (req, res) => {
   try {
     req.body.updatedAt = now;

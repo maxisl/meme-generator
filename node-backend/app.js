@@ -111,18 +111,33 @@ const options = {
       Comment: {
         type: "object",
         properties: {
-          id: {
-            type: "string",
-            description: "Comment's unique ID",
-          },
           text: {
             type: "string",
             description: "Comment's text",
           },
-          timestamp: {
+        },
+      },
+      NewMeme: {
+        type: "object",
+        required: ["title", "image", "tags", "comments"],
+        properties: {
+          title: {
             type: "string",
-            format: "date-time",
-            description: "Timestamp when the comment was created",
+          },
+          image: {
+            type: "string",
+          },
+          tags: {
+            type: "array",
+            items: {
+              type: "string",
+            },
+          },
+          comments: {
+            type: "array",
+            items: {
+              $ref: "#/definitions/Comment",
+            },
           },
         },
       },
