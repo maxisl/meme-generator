@@ -17,7 +17,7 @@ now.setTime(Date.now() + 1 * 60 * 60 * 1000);
       .catch((e) => res.status(500).send())
 });*/
 
-/*
+/**************************************************************
 TODO MEMES GET
 1. GetAll                   (/)
 2. GetMemeById              (/:id)
@@ -132,7 +132,7 @@ router.get("/:memeId", async (req, res) => {
   }
 });
 
-/*
+/**************************************************************
 TODO MEMES POST
 1. PostMeme             (/file)              - requires Auth
 2. LikeMeme             (/:id/like)         - requires Auth? => see notes
@@ -246,7 +246,7 @@ router.post("/:memeId/comment", async (req, res) => {
   }
 });
 
-/*
+/**************************************************************
 TODO MEMES DELETE
 1. DeleteMemeById       (/:id)      - requires Auth
  */
@@ -291,7 +291,7 @@ router.delete("/:memeId", async (req, res) => {
   }
 });
 
-/*
+/**************************************************************
 TODO PATCH MEMES
 1. UpdateMemeById       (/:id)      - requires Auth
  */
