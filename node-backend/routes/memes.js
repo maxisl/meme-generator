@@ -285,7 +285,7 @@ router.delete("/:memeId", async (req, res) => {
   try {
     const memeId = req.params.memeId;
     const meme = await Meme.findByIdAndDelete(memeId);
-    res.send(`Deleted user: ${meme}`);
+    res.send(`Deleted meme: ${meme}`);
   } catch (error) {
     res.status(500).send(error);
   }
