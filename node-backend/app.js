@@ -141,6 +141,24 @@ const options = {
           },
         },
       },
+      User: {
+        type: "object",
+        required: ["name", "email", "password"],
+        properties: {
+          name: {
+            type: "string",
+            description: "The name of the user",
+          },
+          email: {
+            type: "string",
+            description: "The email address of the user",
+          },
+          password: {
+            type: "string",
+            description: "The hashed password of the user",
+          },
+        },
+      },
     },
   },
   apis: ["./routes/*.js"],

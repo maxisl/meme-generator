@@ -19,6 +19,26 @@ TODO USERS GET
 4. GetUserTemplates         (/templates.js)
 */
 
+/**
+ * @swagger
+ * /users/:
+ *   get:
+ *     tags:
+ *       - users
+ *     summary: Get all users
+ *     description: Returns a list of all users in the database
+ *     responses:
+ *       200:
+ *         description: Success
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: "#/definitions/User"
+ *       500:
+ *         description: Server error
+ */
 // GET ALL USERS
 router.get("/", (req, res) => {
   User.find((error, users) => {
@@ -35,6 +55,36 @@ TODO USERS POST
 1. CreateUser                   (/)
 */
 
+/**
+ * @swagger
+ * /users/:
+ *   post:
+ *     tags:
+ *       - users
+ *     summary: Create a new user
+ *     description: Creates a new user in the database
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/definitions/User'
+ *     responses:
+ *       201:
+ *         description: Success
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: A message indicating that the user was created successfully
+ *       400:
+ *         description: Bad request
+ *       500:
+ *         description: Server error
+ */
 // CREATE NEW USER
 router.post("/", (req, res) => {
   const user = new User({
