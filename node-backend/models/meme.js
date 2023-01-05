@@ -8,6 +8,10 @@ now.setTime(Date.now() + 1 * 60 * 60 * 1000);
 
 const memeSchema = new Schema({
   _id: mongoose.Schema.Types.ObjectId,
+  author: {
+    type: String,
+    required: true,
+  },
   title: {
     type: String,
     required: true,

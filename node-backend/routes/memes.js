@@ -169,10 +169,10 @@ TODO MEMES POST
 router.post("/", async (req, res) => {
   const meme = new Meme({
     _id: new mongoose.Types.ObjectId(),
+    author: req.body.author,
     title: req.body.title,
     image: req.body.image,
     tags: req.body.tags,
-    likes: req.body.likes,
     comments: req.body.comments,
   });
   try {

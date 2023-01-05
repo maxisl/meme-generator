@@ -119,8 +119,11 @@ const options = {
       },
       NewMeme: {
         type: "object",
-        required: ["title", "image", "tags", "comments"],
+        required: ["author", "title", "image", "tags", "comments"],
         properties: {
+          author: {
+            type: "string",
+          },
           title: {
             type: "string",
           },
