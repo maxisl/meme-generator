@@ -9,7 +9,8 @@ now.setTime(Date.now() + 1 * 60 * 60 * 1000);
 const memeSchema = new Schema({
   _id: mongoose.Schema.Types.ObjectId,
   author: {
-    type: String,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
     required: true,
   },
   title: {
@@ -35,7 +36,7 @@ const memeSchema = new Schema({
         type: String,
         required: true,
       },
-      author: {
+      commentAuthor: {
         type: String,
         required: true,
         default: "unknown",

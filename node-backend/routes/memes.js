@@ -1,6 +1,7 @@
 var express = require("express");
 var router = express.Router();
 const Meme = require("../models/meme");
+const User = require("../models/user")
 const mongoose = require("mongoose");
 
 // change now to current timestamp in the GMT+1 time zone
@@ -167,6 +168,12 @@ TODO MEMES POST
  */
 // POST MEME
 router.post("/", async (req, res) => {
+  // Check if the user exists in the User collection
+  const user = await User.findById(req.body.author);
+  if (!user) {
+    return res.status(404).json({ message: 'User not found' });
+  }
+
   const meme = new Meme({
     _id: new mongoose.Types.ObjectId(),
     author: req.body.author,
@@ -182,6 +189,7 @@ router.post("/", async (req, res) => {
     res.status(500).send(error);
   }
 });
+
 
 /**
  * @swagger
