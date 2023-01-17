@@ -112,13 +112,20 @@ TODO USERS DELETE
 */
 
 // DELETE USER
-router.delete("/:userId", async (req, res) => {
+router.delete('/:id', async (req, res) => {
   try {
-    const userId = req.params.userId;
-    const user = await User.findByIdAndDelete(userId);
-    res.send(`Deleted user: ${user}`);
-  } catch (error) {
-    res.status(500).send(error);
+    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+      return res.status(404).json({ message: 'Invalid id' });
+    }
+    const user = await User.findOne({ _id: mongoose.Types.ObjectId(req.params.id) });
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+    await User.deleteOne({ _id: mongoose.Types.ObjectId(req.params.id) });
+    res.status(200).json({ message: 'User deleted successfully' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Error deleting user' });
   }
 });
 

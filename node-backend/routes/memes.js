@@ -173,7 +173,6 @@ router.post("/", async (req, res) => {
   if (!user) {
     return res.status(404).json({ message: 'User not found' });
   }
-
   const meme = new Meme({
     _id: new mongoose.Types.ObjectId(),
     author: req.body.author,
