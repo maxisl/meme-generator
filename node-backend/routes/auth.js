@@ -104,7 +104,7 @@ router.post("/login", async (req, res) => {
         { expiresIn: "1d" }
       );
       res.status(201).json({
-        success: user, token
+        user, token
       });
     }
   } catch (err) {

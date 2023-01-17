@@ -21,4 +21,12 @@ const userSchema = new Schema({
 
 });
 
+// hide password in JSON response
+userSchema.set("toJSON", {
+  versionKey: false,
+  transform: (doc, ret) => {
+    delete ret.password;
+  },
+});
+
 module.exports = mongoose.model("User", userSchema);
