@@ -3,6 +3,7 @@ var router = express.Router();
 const mongoose = require("mongoose");
 const User = require("../models/user");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 /* GET users listing. */
 /*router.get('/', function (req, res, next) {
@@ -70,73 +71,6 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-/*
-TODO USERS POST
-1. CreateUser                   (/)
-*/
-
-/**
- * @swagger
- * /users/:
- *   post:
- *     tags:
- *       - users
- *     summary: Create a new user
- *     description: Creates a new user in the database
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             $ref: '#/definitions/User'
- *     responses:
- *       201:
- *         description: Success
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *                   description: A message indicating that the user was created successfully
- *       400:
- *         description: Bad request
- *       500:
- *         description: Server error
- */
-// CREATE NEW USER
-router.post("/", async (req, res) => {
-  const name = req.body.name;
-  const email = req.body.email;
-  const password = req.body.password;
-
-  if (!email || !password || !name) {
-    return res.status(400).json({Error: "Not all required arguments supplied"});
-  }
-
-  const hashedPassword = await bcrypt.hash(password, 11);
-
-  const user = new User({
-    _id: new mongoose.Types.ObjectId(),
-    name: name,
-    email: email,
-    password: hashedPassword,
-  });
-
-  // TODO hash password
-
-  user.save((error) => {
-    if (error) {
-      res.send(error);
-    } else {
-      console.log(user);
-      res.status(201).json({
-        user : user
-      });
-    }
-  });
-});
 
 /*
 TODO USERS DELETE

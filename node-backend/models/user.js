@@ -1,5 +1,4 @@
-const mongoose = require("mongoose");
-const trace_events = require("trace_events");
+const mongoose = require("mongoose");;
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
