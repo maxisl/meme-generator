@@ -64,7 +64,10 @@ router.post("/register", async (req, res) => {
 
   user.save((error) => {
     if (error) {
-      res.send(error);
+      if (error.name === "MongoError" && error.code === 11000) {
+        return res.status(409).send({ error: "Email already exists" });
+      }
+      return res.status(422).send(error.errors.email.message);
     } else {
       console.log(user);
       res.status(201).json({
@@ -104,7 +107,8 @@ router.post("/login", async (req, res) => {
         { expiresIn: "1d" }
       );
       res.status(201).json({
-        user, token
+        user,
+        token,
       });
     }
   } catch (err) {
