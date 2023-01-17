@@ -50,6 +50,24 @@ router.get("/", (req, res) => {
   });
 });
 
+// GET USER BY ID
+router.get('/:id', async (req, res) => {
+  try {
+    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+      return res.status(404).json({ message: 'Invalid id' });
+    }
+    const user = await User.findOne({ _id: mongoose.Types.ObjectId(req.params.id) });
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+    res.status(200).json({user});
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Error getting user" });
+  }
+});
+
+
 /*
 TODO USERS POST
 1. CreateUser                   (/)
