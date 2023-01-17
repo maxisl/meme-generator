@@ -2,6 +2,7 @@ var express = require("express");
 var router = express.Router();
 const mongoose = require("mongoose");
 const User = require("../models/user");
+const bcrypt = require("bcrypt");
 
 /* GET users listing. */
 /*router.get('/', function (req, res, next) {
@@ -51,22 +52,23 @@ router.get("/", (req, res) => {
 });
 
 // GET USER BY ID
-router.get('/:id', async (req, res) => {
+router.get("/:id", async (req, res) => {
   try {
     if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
-      return res.status(404).json({ message: 'Invalid id' });
+      return res.status(404).json({ message: "Invalid id" });
     }
-    const user = await User.findOne({ _id: mongoose.Types.ObjectId(req.params.id) });
+    const user = await User.findOne({
+      _id: mongoose.Types.ObjectId(req.params.id),
+    });
     if (!user) {
-      return res.status(404).json({ message: 'User not found' });
+      return res.status(404).json({ message: "User not found" });
     }
-    res.status(200).json({user});
+    res.status(200).json({ user });
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Error getting user" });
   }
 });
-
 
 /*
 TODO USERS POST
@@ -104,13 +106,25 @@ TODO USERS POST
  *         description: Server error
  */
 // CREATE NEW USER
-router.post("/", (req, res) => {
+router.post("/", async (req, res) => {
+  const name = req.body.name;
+  const email = req.body.email;
+  const password = req.body.password;
+
+  if (!email || !password || !name) {
+    return res.status(400).json({Error: "Not all required arguments supplied"});
+  }
+
+  const hashedPassword = await bcrypt.hash(password, 11);
+
   const user = new User({
     _id: new mongoose.Types.ObjectId(),
-    name: req.body.name,
-    email: req.body.email,
-    password: req.body.password,
+    name: name,
+    email: email,
+    password: hashedPassword,
   });
+
+  // TODO hash password
 
   user.save((error) => {
     if (error) {
@@ -118,7 +132,7 @@ router.post("/", (req, res) => {
     } else {
       console.log(user);
       res.status(201).json({
-        message: "User created",
+        user : user
       });
     }
   });
@@ -130,20 +144,22 @@ TODO USERS DELETE
 */
 
 // DELETE USER
-router.delete('/:id', async (req, res) => {
+router.delete("/:id", async (req, res) => {
   try {
     if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
-      return res.status(404).json({ message: 'Invalid id' });
+      return res.status(404).json({ message: "Invalid id" });
     }
-    const user = await User.findOne({ _id: mongoose.Types.ObjectId(req.params.id) });
+    const user = await User.findOne({
+      _id: mongoose.Types.ObjectId(req.params.id),
+    });
     if (!user) {
-      return res.status(404).json({ message: 'User not found' });
+      return res.status(404).json({ message: "User not found" });
     }
     await User.deleteOne({ _id: mongoose.Types.ObjectId(req.params.id) });
-    res.status(200).json({ message: 'User deleted successfully' });
+    res.status(200).json({ message: "User deleted successfully" });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: 'Error deleting user' });
+    res.status(500).json({ message: "Error deleting user" });
   }
 });
 
