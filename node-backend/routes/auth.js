@@ -4,10 +4,9 @@ const mongoose = require("mongoose");
 const User = require("../models/user");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const { hash } = require("bcrypt");
 
 /*
-TODO USERS POST
+TODO USERS AUTH
 1. RegisterUser                   (/register)
 2. LoginUser                      (/login)
 */
@@ -99,16 +98,15 @@ router.post("/login", async (req, res) => {
     if (!isMatch) {
       return res.status(401).json({ Error: "Incorrect password or username" });
     } else {
-      return res.status(200).json({ Success: "Logged In" });
+      const token = jwt.sign(
+        { id: user._id, name: user.name, email: user.email },
+        process.env.JWT_SECRET,
+        { expiresIn: "1d" }
+      );
+      res.status(201).json({
+        success: user, token
+      });
     }
-
-    /*const token = jwt.sign(
-      { id: user._id, name: user.name, email: user.email },
-      process.env.JWT_SECRET,
-      { expiresIn: "1d" }
-    );
-    // Return the user and the JWT
-    return { user, token };*/
   } catch (err) {
     console.error(err);
     throw err;
