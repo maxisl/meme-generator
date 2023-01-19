@@ -147,7 +147,7 @@ router.get("/userMemes/:userId", async (req, res) => {
   }
 });
 
-/**************************************************************
+/****************************************************************************************
 TODO MEMES POST
 1. PostMeme             (/file)              - requires Auth
 2. LikeMeme             (/:id/like)         - requires Auth? => see notes
@@ -247,19 +247,16 @@ router.post("/", async (req, res) => {
 // POST COMMENT ON MEME
 router.post("/:memeId/comment", async (req, res) => {
   try {
-    // Validate request body
     if (!req.body.text) {
       res.status(400).send("Comment text is required");
       return;
     }
-    // Find meme by id and update comments array
     console.log(req.params.memeId);
     const updatedMeme = await Meme.findByIdAndUpdate(
       req.params.memeId,
       { $push: { comments: { text: req.body.text } } },
       { new: true }
     );
-    // Return updated meme
     res.send(updatedMeme);
   } catch (error) {
     res.status(500).send(error);

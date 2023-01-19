@@ -35,6 +35,10 @@ const memeSchema = new Schema({
         type: Date,
         default: () => new Date(),
       },
+      likeCount: {
+        type: Number,
+        default: 0,
+      },
     },
   ],
   comments: [
@@ -51,6 +55,10 @@ const memeSchema = new Schema({
       date: {
         type: Date,
         default: now,
+      },
+      commentCount: {
+        type: Number,
+        default: 0,
       },
     },
   ],
