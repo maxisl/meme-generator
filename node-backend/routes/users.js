@@ -96,4 +96,16 @@ router.delete("/:id", async (req, res) => {
   }
 });
 
+
+// DELETE ALL USERS - TESTING ONLY
+router.delete("/", async (req, res) => {
+  try {
+    const deletedUsers = await User.deleteMany({});
+    res.status(200).json({ message: "All users have been deleted", deletedUsers });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+
 module.exports = router;

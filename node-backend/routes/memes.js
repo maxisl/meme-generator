@@ -280,54 +280,6 @@ router.post("/comment/:memeId/", async (req, res) => {
 // POST UNLIKE MEME
 
 /**************************************************************
-TODO MEMES DELETE
-1. DeleteMemeById       (/:id)      - requires Auth
- */
-
-/**
- * @swagger
- * /memes/{memeId}:
- *   delete:
- *     tags:
- *       - memes
- *     summary: Delete a meme
- *     description: Deletes the specified meme from the collection
- *     parameters:
- *       - in: path
- *         name: memeId
- *         schema:
- *           type: string
- *         required: true
- *         description: The ID of the meme to delete
- *     responses:
- *       200:
- *         description: Successfully deleted the meme
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 message:
- *                   type: string
- *                   description: The message indicating the success of the delete operation
- *       500:
- *         description: Internal server error
- */
-// DELETE MEME BY ID
-router.delete("/:memeId", async (req, res) => {
-  try {
-    const memeId = req.params.memeId;
-    const deletedMeme = await Meme.findByIdAndRemove(memeId);
-    if (!deletedMeme) {
-      return res.status(404).json({ error: "Meme not found" });
-    }
-    res.status(200).json({ message: "Meme deleted successfully", deletedMeme });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});
-
-/**************************************************************
 TODO PATCH MEMES
 1. UpdateMemeById       (/:id)      - requires Auth
  */
@@ -379,6 +331,64 @@ router.patch("/:memeId", async (req, res) => {
     }
   } catch (error) {
     res.status(500).send(error);
+  }
+});
+
+/**************************************************************
+ TODO MEMES DELETE
+ 1. DeleteMemeById       (/:id)      - requires Auth
+ */
+
+/**
+ * @swagger
+ * /memes/{memeId}:
+ *   delete:
+ *     tags:
+ *       - memes
+ *     summary: Delete a meme
+ *     description: Deletes the specified meme from the collection
+ *     parameters:
+ *       - in: path
+ *         name: memeId
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: The ID of the meme to delete
+ *     responses:
+ *       200:
+ *         description: Successfully deleted the meme
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   description: The message indicating the success of the delete operation
+ *       500:
+ *         description: Internal server error
+ */
+// DELETE MEME BY ID
+router.delete("/:memeId", async (req, res) => {
+  try {
+    const memeId = req.params.memeId;
+    const deletedMeme = await Meme.findByIdAndRemove(memeId);
+    if (!deletedMeme) {
+      return res.status(404).json({ error: "Meme not found" });
+    }
+    res.status(200).json({ message: "Meme deleted successfully", deletedMeme });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// DELETE ALL MEMES - TESTING ONLY
+router.delete("/", async (req, res) => {
+  try {
+    const deletedMemes = await Meme.deleteMany({});
+    res.status(200).json({ message: "All memes have been deleted", deletedMemes });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
   }
 });
 

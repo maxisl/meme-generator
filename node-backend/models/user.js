@@ -11,7 +11,7 @@ const userSchema = new Schema({
   email: {
     type: String,
     required: true,
-    unique: true, // TODO does not work so far, can create multiple users with same email
+    unique: true,
     match:
       /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/,
   },
