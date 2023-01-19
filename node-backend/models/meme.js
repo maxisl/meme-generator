@@ -10,8 +10,7 @@ const memeSchema = new Schema({
   _id: mongoose.Schema.Types.ObjectId,
   author: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
-    required: true,
+    ref: "User",
   },
   title: {
     type: String,
@@ -26,10 +25,18 @@ const memeSchema = new Schema({
       type: String,
     },
   ],
-  likes: {
-    type: Number,
-    default: 0,
-  },
+  likes: [
+    {
+      liked_by: {
+        ref: "User",
+        type: mongoose.Schema.Types.ObjectId,
+      },
+      liked: {
+        type: Date,
+        default: () => new Date(),
+      },
+    },
+  ],
   comments: [
     {
       text: {
@@ -37,8 +44,8 @@ const memeSchema = new Schema({
         required: true,
       },
       commentAuthor: {
-        type: String,
-        required: true,
+        ref: "User",
+        type: mongoose.Schema.Types.ObjectId,
         default: "unknown",
       },
       date: {
@@ -54,6 +61,10 @@ const memeSchema = new Schema({
   updatedAt: {
     type: Date,
     default: now,
+  },
+  template: {
+    ref: "Template",
+    type: mongoose.Schema.Types.ObjectId,
   },
 });
 

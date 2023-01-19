@@ -21,6 +21,7 @@ const userSchema = new Schema({
   },
 });
 
+// check for unique email
 userSchema.plugin(uniqueValidator, { message: 'Error, expected {PATH} to be unique.' });
 
 // hide password in JSON response

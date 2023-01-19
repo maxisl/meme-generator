@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 
 // change now to current timestamp in the GMT+1 time zone
@@ -6,11 +6,11 @@ const now = new Date();
 // add 1 hour to get correct timestamp
 now.setTime(Date.now() + 1 * 60 * 60 * 1000);
 
-const memeSchema = new Schema({
+const templateSchema = new Schema({
   _id: mongoose.Schema.Types.ObjectId,
   author: {
-    type: String,     // TODO dynamically link user with ref: 'User'
-    required: true,
+    ref: "User",
+    type: mongoose.Schema.Types.ObjectId,
   },
   date: {
     type: Date,
@@ -26,4 +26,4 @@ const memeSchema = new Schema({
   },
 });
 
-module.exports = mongoose.model("Meme", memeSchema);
+module.exports = mongoose.model("Template", templateSchema);
