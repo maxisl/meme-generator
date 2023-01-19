@@ -245,23 +245,39 @@ router.post("/", async (req, res) => {
  *         description: Internal server error
  */
 // POST COMMENT ON MEME
-router.post("/:memeId/comment", async (req, res) => {
+router.post("/comment/:memeId/", async (req, res) => {
   try {
     if (!req.body.text) {
-      res.status(400).send("Comment text is required");
+      res.status(400).json({ error: "Comment text is required" });
       return;
     }
-    console.log(req.params.memeId);
-    const updatedMeme = await Meme.findByIdAndUpdate(
-      req.params.memeId,
-      { $push: { comments: { text: req.body.text } } },
-      { new: true }
-    );
-    res.send(updatedMeme);
+    if (!req.body.commentAuthor) {
+      res.status(400).json({ error: "Comment author is required" });
+      return;
+    }
+    const user = await User.findById(req.body.commentAuthor);
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+    const meme = await Meme.findById(req.params.memeId);
+    if (!meme) {
+      return res.status(404).json({ error: "Meme not found" });
+    }
+    meme.comments.push({
+      text: req.body.text,
+      commentAuthor: req.body.commentAuthor,
+    });
+    meme.commentCount += 1;
+    await meme.save();
+    res.status(201).json({ message: "Comment added successfully", meme });
   } catch (error) {
-    res.status(500).send(error);
+    res.status(500).json({ error: error.message });
   }
 });
+
+// POST LIKE MEME
+
+// POST UNLIKE MEME
 
 /**************************************************************
 TODO MEMES DELETE
@@ -305,12 +321,11 @@ router.delete("/:memeId", async (req, res) => {
     if (!deletedMeme) {
       return res.status(404).json({ error: "Meme not found" });
     }
-    res.status(200).json({message: "Meme deleted successfully", deletedMeme});
+    res.status(200).json({ message: "Meme deleted successfully", deletedMeme });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 });
-
 
 /**************************************************************
 TODO PATCH MEMES

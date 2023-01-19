@@ -35,12 +35,12 @@ const memeSchema = new Schema({
         type: Date,
         default: () => new Date(),
       },
-      likeCount: {
-        type: Number,
-        default: 0,
-      },
     },
   ],
+  likeCount: {
+    type: Number,
+    default: 0,
+  },
   comments: [
     {
       text: {
@@ -50,18 +50,17 @@ const memeSchema = new Schema({
       commentAuthor: {
         ref: "User",
         type: mongoose.Schema.Types.ObjectId,
-        default: "unknown",
       },
       date: {
         type: Date,
         default: now,
       },
-      commentCount: {
-        type: Number,
-        default: 0,
-      },
     },
   ],
+  commentCount: {
+    type: Number,
+    default: 0,
+  },
   createdAt: {
     type: Date,
     default: now,
