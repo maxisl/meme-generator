@@ -73,7 +73,6 @@ router.get("/:id", async (req, res) => {
 
 
 /*
-TODO USERS DELETE
 1. DeleteUser                   (/)
 */
 

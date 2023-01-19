@@ -1,7 +1,7 @@
 var express = require("express");
 var router = express.Router();
 const Meme = require("../models/meme");
-const User = require("../models/user")
+const User = require("../models/user");
 const mongoose = require("mongoose");
 
 // change now to current timestamp in the GMT+1 time zone
@@ -133,6 +133,20 @@ router.get("/:memeId", async (req, res) => {
   }
 });
 
+// GET USER MEMES BY USER ID
+router.get("/userMemes/:userId", async (req, res) => {
+  try {
+    const userId = req.params.id;
+    const memes = await Meme.find({ author: userId }).populate("author");
+    if (!memes) {
+      return res.status(404).json({ error: "No memes found" });
+    }
+    res.json(memes);
+  } catch (err) {
+    return res.status(500).json({ error: err });
+  }
+});
+
 /**************************************************************
 TODO MEMES POST
 1. PostMeme             (/file)              - requires Auth
@@ -171,7 +185,7 @@ router.post("/", async (req, res) => {
   // Check if the user exists in the User collection
   const user = await User.findById(req.body.author);
   if (!user) {
-    return res.status(404).json({ message: 'User not found' });
+    return res.status(404).json({ message: "User not found" });
   }
   const meme = new Meme({
     _id: new mongoose.Types.ObjectId(),
@@ -188,7 +202,6 @@ router.post("/", async (req, res) => {
     res.status(500).send(error);
   }
 });
-
 
 /**
  * @swagger
@@ -291,12 +304,16 @@ TODO MEMES DELETE
 router.delete("/:memeId", async (req, res) => {
   try {
     const memeId = req.params.memeId;
-    const meme = await Meme.findByIdAndDelete(memeId);
-    res.send(`Deleted meme: ${meme}`);
+    const deletedMeme = await Meme.findByIdAndRemove(memeId);
+    if (!deletedMeme) {
+      return res.status(404).json({ error: "Meme not found" });
+    }
+    res.status(200).json({message: "Meme deleted successfully", deletedMeme});
   } catch (error) {
-    res.status(500).send(error);
+    res.status(500).json({ error: error.message });
   }
 });
+
 
 /**************************************************************
 TODO PATCH MEMES
