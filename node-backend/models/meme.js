@@ -31,10 +31,6 @@ const memeSchema = new Schema({
         ref: "User",
         type: mongoose.Schema.Types.ObjectId,
       },
-      liked: {
-        type: Date,
-        default: () => new Date(),
-      },
     },
   ],
   likeCount: {

@@ -275,9 +275,51 @@ router.post("/comment/:memeId/", async (req, res) => {
   }
 });
 
-// POST LIKE MEME
+// TODO POST LIKE MEME
+router.post("/like/:id", async (req, res) => {
+  try {
+    const meme = await Meme.findById(req.params.id);
+    if (!meme) return res.status(404).send({ error: "Meme not found" });
+    if (!req.body.liker) {
+      res.status(400).json({ error: "Liker is required" });
+      return;
+    }
+    const user = await User.findById(req.body.liker);
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+    // check if already liked
+    if (meme.likes.find(like => like.liked_by.toString() === req.body.liker)) {
+      return res.status(400).json({ error: "User already liked this meme" });
+    }
+    meme.likes.push({ liked_by: req.body.liker });
+    meme.likeCount++;
+    await meme.save();
+    res.send({ message: "Like added successfully" });
+  } catch (error) {
+    res.status(500).send({ error: error.message });
+  }
+});
 
-// POST UNLIKE MEME
+// TODO POST UNLIKE MEME
+router.post("/removeLike/:id", async (req, res) => {
+  try {
+    const meme = await Meme.findById(req.params.id);
+    if (!meme) return res.status(404).send({ error: "Meme not found" });
+    // find index of like by checking if liked_by field matches the userId passed in request body
+    const likeIndex = meme.likes.findIndex(
+      (like) => like.liked_by.toString() === req.body.unliker
+    );
+    if (likeIndex === -1)
+      return res.status(404).send({ error: "No like found for this user" });
+    meme.likes.splice(likeIndex, 1);
+    meme.likeCount--;
+    await meme.save();
+    res.send({ message: "Unlike successful" });
+  } catch (error) {
+    res.status(500).send({ error: error.message });
+  }
+});
 
 /**************************************************************
 TODO PATCH MEMES
@@ -386,7 +428,9 @@ router.delete("/:memeId", async (req, res) => {
 router.delete("/", async (req, res) => {
   try {
     const deletedMemes = await Meme.deleteMany({});
-    res.status(200).json({ message: "All memes have been deleted", deletedMemes });
+    res
+      .status(200)
+      .json({ message: "All memes have been deleted", deletedMemes });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
