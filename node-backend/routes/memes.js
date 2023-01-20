@@ -275,7 +275,7 @@ router.post("/comment/:memeId/", async (req, res) => {
   }
 });
 
-// TODO POST LIKE MEME
+// POST LIKE MEME
 router.post("/like/:id", async (req, res) => {
   try {
     const meme = await Meme.findById(req.params.id);
@@ -301,7 +301,7 @@ router.post("/like/:id", async (req, res) => {
   }
 });
 
-// TODO POST UNLIKE MEME
+// POST UNLIKE MEME
 router.post("/removeLike/:id", async (req, res) => {
   try {
     const meme = await Meme.findById(req.params.id);

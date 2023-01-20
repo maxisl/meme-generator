@@ -36,6 +36,7 @@ db.on("error", (error) => {
 const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
 const memesRouter = require("./routes/memes");
+const templateRouter = require("./routes/templates");
 const authRouter = require("./routes/auth");
 
 const app = express();
@@ -223,6 +224,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
 app.use("/memes", memesRouter);
+app.use("/templates", templateRouter);
 app.use("/auth", authRouter);
 
 // catch 404 and forward to error handler

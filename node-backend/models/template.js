@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 // change now to current timestamp in the GMT+1 time zone
@@ -14,6 +14,7 @@ const templateSchema = new Schema({
   },
   date: {
     type: Date,
+    default: now,
     required: true,
   },
   filename: {

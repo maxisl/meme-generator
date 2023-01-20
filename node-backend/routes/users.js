@@ -56,21 +56,20 @@ router.get("/", (req, res) => {
 router.get("/:id", async (req, res) => {
   try {
     if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
-      return res.status(404).json({ message: "Invalid id" });
+      return res.status(404).json({message: "Invalid id"});
     }
     const user = await User.findOne({
       _id: mongoose.Types.ObjectId(req.params.id),
     });
     if (!user) {
-      return res.status(404).json({ message: "User not found" });
+      return res.status(404).json({message: "User not found"});
     }
-    res.status(200).json({ user });
+    res.status(200).json({user});
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: "Error getting user" });
+    res.status(500).json({message: "Error getting user"});
   }
 });
-
 
 /*
 1. DeleteUser                   (/)
@@ -80,32 +79,31 @@ router.get("/:id", async (req, res) => {
 router.delete("/:id", async (req, res) => {
   try {
     if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
-      return res.status(404).json({ message: "Invalid id" });
+      return res.status(404).json({message: "Invalid id"});
     }
     const user = await User.findOne({
       _id: mongoose.Types.ObjectId(req.params.id),
     });
     if (!user) {
-      return res.status(404).json({ message: "User not found" });
+      return res.status(404).json({message: "User not found"});
     }
-    await User.deleteOne({ _id: mongoose.Types.ObjectId(req.params.id) });
-    res.status(200).json({ message: "User deleted successfully" });
+    await User.deleteOne({_id: mongoose.Types.ObjectId(req.params.id)});
+    res.status(200).json({message: "User deleted successfully"});
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: "Error deleting user" });
+    res.status(500).json({message: "Error deleting user"});
   }
 });
-
 
 // DELETE ALL USERS - TESTING ONLY
 router.delete("/", async (req, res) => {
   try {
     const deletedUsers = await User.deleteMany({});
-    res.status(200).json({ message: "All users have been deleted", deletedUsers });
+    res.status(200).json(
+        {message: "All users have been deleted", deletedUsers});
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({error: error.message});
   }
 });
-
 
 module.exports = router;
