@@ -31,30 +31,30 @@ TODO TEMPLATES POST
 1. CreateTemplateWithFile   (/upload/file)
 2. CreateTemplateWithURL    (/upload/url)
 */
-router.post("/upload/file", async (req, res) => {
-  try {
-    const { author, filename, name } = req.body;
-    if (!author || !filename || !name) {
-      return res
-        .status(400)
-        .send({ error: "Author, filename, and name are required" });
-    }
-    User.findById(author);
-    if (!author) {
-      return res.status(404).send({ error: "Author not found" });
-    }
-    const template = new Template({
-      _id: new mongoose.Types.ObjectId(),
-      author,
-      filename,
-      name,
-    });
-    await template.save();
-    res.send({ message: "Template created successfully" });
-  } catch (error) {
-    res.status(500).send({ error: error.message });
+router.post('/upload/file', upload.single('template'), async (req, res) => {
+  if (!req.file) {
+    return res.json({ success: false });
   }
+
+  const now = new Date();
+  const templateName = req.body.name || req.file.originalname;
+  const sha = sha256(req.file.originalname + now.toString()).toString();
+  const ext = path.extname(req.file.originalname);
+  const fileName = sha + ext;
+  const template = await new Template({
+    uploadedAt: now,
+    originalFilename: req.file.originalname,
+    name: templateName,
+    path: fileName,
+    uploadUser: req.user._id,
+  }).save();
+
+
+
+  writeStream.write(req.file.buffer);
+  writeStream.end();
 });
+
 
 /*
 TODO TEMPLATES DELETE
