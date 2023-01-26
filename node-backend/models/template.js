@@ -25,6 +25,9 @@ const templateSchema = new Schema({
     type: String,
     required: true,
   },
+  path: {
+    type: String,
+  },
 });
 
 module.exports = mongoose.model("Template", templateSchema);

@@ -17,6 +17,7 @@ const MONGODB_PORT = process.env.DBPORT || "27017";
 mongoose.set("strictQuery", false);
 mongoose.connect(`mongodb://127.0.0.1:${MONGODB_PORT}/omm-2223`, {
   useNewUrlParser: true,
+  useUnifiedTopology: true,
 });
 const db = mongoose.connection;
 
