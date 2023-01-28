@@ -3,11 +3,10 @@ var router = express.Router();
 const mongoose = require("mongoose");
 const multer = require("multer");
 const path = require("path");
-const GridFsStorage = require('multer-gridfs-storage').GridFsStorage;
+const GridFsStorage = require("multer-gridfs-storage").GridFsStorage;
 const Template = require("../models/template");
-const ObjectId = mongoose.Types.ObjectId
-// const { ObjectId } = require("mongodb");
-
+const crypto = require("crypto");
+import fs from 'fs';
 
 // change now to current timestamp in the GMT+1 time zone
 const now = new Date();
@@ -48,7 +47,7 @@ router.get("/", async (req, res) => {
 
 // GET TEMPLATE BY ID
 router.get("/:id", (req, res) => {
-  const readstream = gfs.createReadStream({
+  const readstream = GridFsStorage.createReadStream({
     _id: req.params.id,
   });
 
@@ -66,46 +65,46 @@ TODO TEMPLATES POST
 2. CreateTemplateWithURL    (/upload/url)
 */
 
+router.post("/upload", async (req, res) => {
+  res.json({ file: req.file });
+});
+
+// TODO fix
 // POST CREATE TEMPLATE WITH FILE
 router.post("/upload/file", upload.single("template"), async (req, res) => {
   if (!req.file) {
-    return res.json({ success: false });
+    return res.status(400).json({ success: false });
   }
+  const file = req.file;
+  // generate a unique 8-byte hexadecimal identifier which is appended to front of file name
+  const uniqueIdentifier = crypto.randomBytes(8).toString("hex");
+  const fileName = `${uniqueIdentifier}-${file.originalname}`;
+  const filePath = path.join(__dirname, "uploads", fileName);
 
-  // create a new template instance
-  const now = new Date();
-  const templateName = req.body.name || req.file.originalname;
-  const fileName = new ObjectId() + path.extname(req.file.originalname);
-  const template = await new Template({
-    author: req.user._id,
-    date: now,
-    filename: req.file.originalname,
-    name: templateName,
-    path: fileName,
-  }).save();
-
-  // save the file to GridFS
-  try {
-    const writeStream = gfs.createWriteStream({
-      filename: fileName,
-      mode: "w",
-      content_type: req.file.mimetype,
-    });
-    // update the path field of the Template instance with the _id of the file saved to GridFS
-    writeStream.on("close", (file) => {
-      template.path = file._id;
-      template.save();
-      res.json({
-        success: true,
-        template: template,
+  file.mv(filePath, async (err) => {
+    // create a new template instance
+    const templateName = req.body.name || req.file.originalname;
+    const template = await new Template({
+      _id: new mongoose.Types.ObjectId(),
+      author: req.body._id,
+      // TODO activate as soon as user can be logged in
+      // author: req.user._id,
+      date: now,
+      filename: req.file.originalname,
+      name: templateName,
+      path: req.file.id,
+    })
+      .save()
+      .then(() => {
+        res.json({
+          success: true,
+          template: template,
+        });
+      })
+      .catch((err) => {
+        return res.status(500).send(err);
       });
-    });
-    writeStream.write(req.file.buffer);
-    writeStream.end();
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ success: false });
-  }
+  });
 });
 
 /*
