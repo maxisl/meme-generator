@@ -19,7 +19,7 @@ const templateSchema = new Schema({
   },
   filename: {
     type: String,
-    required: true,
+    //required: true,
   },
   name: {
     type: String,

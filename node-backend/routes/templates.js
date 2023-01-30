@@ -6,26 +6,20 @@ const path = require("path");
 const GridFsStorage = require("multer-gridfs-storage").GridFsStorage;
 const Template = require("../models/template");
 const crypto = require("crypto");
-import fs from 'fs';
 
 // change now to current timestamp in the GMT+1 time zone
 const now = new Date();
 // add 1 hour to get correct timestamp
 now.setTime(Date.now() + 1 * 60 * 60 * 1000);
 
-const MONGODB_PORT = process.env.DBPORT || "27017";
-
-const storage = new GridFsStorage({
-  url: `mongodb://127.0.0.1:${MONGODB_PORT}/omm-2223`,
-  file: (req, file) => {
-    return {
-      filename: file.originalname,
-      bucketName: "templates",
-    };
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    // destination callback with path
+    cb(null, "./uploads/");
   },
 });
 
-const upload = multer({ storage });
+const upload = multer({ storage: storage });
 
 /*
 TODO TEMPLATES GET
@@ -65,12 +59,13 @@ TODO TEMPLATES POST
 2. CreateTemplateWithURL    (/upload/url)
 */
 
-router.post("/upload", async (req, res) => {
+/*router.post("/upload", async (req, res) => {
   res.json({ file: req.file });
-});
+});*/
 
 // TODO fix
 // POST CREATE TEMPLATE WITH FILE
+/*
 router.post("/upload/file", upload.single("template"), async (req, res) => {
   if (!req.file) {
     return res.status(400).json({ success: false });
@@ -105,6 +100,37 @@ router.post("/upload/file", upload.single("template"), async (req, res) => {
         return res.status(500).send(err);
       });
   });
+});
+*/
+
+router.post("/", upload.single("template"), async (req, res) => {
+  console.log(req.file);
+  const template = new Template({
+    _id: new mongoose.Types.ObjectId(),
+    author: req.body._id,
+    // TODO activate as soon as user can be logged in
+    // author: req.user._id,
+    date: now,
+    filename: req.file.filename,
+    name: req.body.name,
+  });
+  template
+    .save()
+    .then((result) => {
+      console.log("Result: " + result);
+      res.status(201).json({
+        message: "Template created successfully",
+        createdTemplate: {
+          _id: result._id,
+        },
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json({
+        error: err,
+      });
+    });
 });
 
 /*
