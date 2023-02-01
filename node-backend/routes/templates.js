@@ -2,10 +2,10 @@ const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
 const multer = require("multer");
-const GridFsStorage = require("multer-gridfs-storage").GridFsStorage;
 const Template = require("../models/template");
 const path = require("path");
 const { nanoid } = require("nanoid");
+const Meme = require("../models/meme");
 
 // change now to current timestamp in the GMT+1 time zone
 const now = new Date();
@@ -32,6 +32,7 @@ const upload = multer({
   fileFilter: uploadFilter,
 });
 
+/**************************************************************
 /*
 TODO TEMPLATES GET
 1. GetAll                   (/)
@@ -51,40 +52,24 @@ router.get("/", async (req, res) => {
 });
 
 // GET TEMPLATE BY ID
-router.get("/:id", (req, res) => {
-  const readstream = GridFsStorage.createReadStream({
-    _id: req.params.id,
-  });
-
-  readstream.on("error", (err) => {
-    res.status(404).json({ success: false, message: "File not found" });
-  });
-
-  res.set("Content-Type", "image/jpeg");
-  readstream.pipe(res);
+router.get("/:templateId", async (req, res) => {
+  try {
+    const template = await Meme.findById(req.params.templateId);
+    if (!meme) {
+      res.status(404).send("Meme not found");
+    } else {
+      res.send(meme);
+    }
+  } catch (error) {
+    res.status(500).send(error);
+  }
 });
 
+/**************************************************************
 /*
-TODO TEMPLATES POST
+TEMPLATES POST
 1. CreateTemplateWithFile   (/upload/file)
-2. CreateTemplateWithURL    (/upload/url)
-*/
-
-/*router.post("/upload", async (req, res) => {
-  res.json({ file: req.file });
-});*/
-
-// TODO fix
-// POST CREATE TEMPLATE WITH FILE
-/*
-router.post("/upload/file", upload.single("template"), async (req, res) => {
-  if (!req.file) {
-    return res.status(400).json({ success: false });
-  }
-  const file = req.file;
-
-  const filePath = path.join(__dirname, "uploads", fileName);
-
+2. TODO CreateTemplateWithURL    (/upload/url)
 */
 
 router.post("/", upload.single("template"), async (req, res) => {
@@ -125,8 +110,8 @@ router.post("/", upload.single("template"), async (req, res) => {
     });
 });
 
+/**************************************************************
 /*
-TODO TEMPLATES DELETE
 1. DeleteTemplate           (/:id)
 */
 
@@ -141,13 +126,19 @@ router.delete("/all", async (req, res) => {
 });
 
 // DELETE TEMPLATE BY ID
-router.delete("/:id", async (req, res) => {
+router.delete("/:templateId", async (req, res) => {
   try {
-    await Template.findByIdAndDelete(req.params.id);
+    const templateId = req.params.templateId;
+    const deletedTemplate = await Template.findByIdAndRemove(templateId);
+    if (!deletedTemplate) {
+      return res.status(404).json({ error: "Template not found" });
+    }
+    res
+      .status(200)
+      .json({ message: "Template deleted successfully", deletedTemplate });
   } catch (error) {
-    res.status(500).send({ error: error.message });
+    res.status(500).json({ error: error.message });
   }
-  // TODO check if user that wants to delete is original uploader
 });
 
 module.exports = router;

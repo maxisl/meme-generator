@@ -21,8 +21,8 @@ now.setTime(Date.now() + 1 * 60 * 60 * 1000);
 /**************************************************************
 TODO MEMES GET
 1. GetAll                   (/)
-2. GetMemeById              (/:id)
-3. GetRandomMeme            (/random)
+2. GetRandomMeme            (/random)
+3. GetMemeById              (/:id)
 4. GetPreviousMemeForId     (/:id/previous)
 5. GetNextMemeById          (/:id/next)
 6. GetMemeStatsById         (/:id/stats)
