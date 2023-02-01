@@ -19,6 +19,7 @@
     "http-errors": "~1.6.3",
     "jade": "~1.11.0",
     "jsonwebtoken": "^9.0.0",
+    "mime-types": "^2.1.35",
     "mongoose": "^6.8.1",
     "mongoose-unique-validator": "^3.1.0",
     "monk": "7.3.3",

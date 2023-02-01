@@ -6,6 +6,10 @@ const Template = require("../models/template");
 const path = require("path");
 const { nanoid } = require("nanoid");
 const Meme = require("../models/meme");
+const fs = require("fs");
+const { promisify } = require("util");
+const unlinkAsync = promisify(fs.unlink);
+const mime = require("mime-types");
 
 // change now to current timestamp in the GMT+1 time zone
 const now = new Date();
@@ -16,6 +20,13 @@ const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     // destination callback with path
     cb(null, "./uploads/");
+  },
+  filename: function (req, file, cb) {
+    /* generates a "unique" name - not collision proof but unique enough for small sized applications */
+    let id = nanoid();
+    /* need to use the file's mimetype because the file name may not have an extension at all */
+    let ext = mime.extension(file.mimetype);
+    cb(null, `${id}.${ext}`);
   },
 });
 
@@ -75,9 +86,10 @@ TEMPLATES POST
 router.post("/", upload.single("template"), async (req, res) => {
   console.log(req.file);
   const originalName = req.file.filename || req.file.originalname;
+  /* deactivated - generated in multer storage
   const fileId = nanoid();
-  const ending = path.extname(req.file.originalname) || ".jpg";
-  const fileName = `${originalName}${fileId}${ending}`;
+  const ending = path.extname(req.file.originalname) || ".jpg";*/
+  const fileName = `${originalName}`;
   const filePath = path.join(
     "uploads/templates",
     `${now.getFullYear()}-${now.getMonth() + 1}`,
@@ -130,6 +142,7 @@ router.delete("/:templateId", async (req, res) => {
   try {
     const templateId = req.params.templateId;
     const deletedTemplate = await Template.findByIdAndRemove(templateId);
+    await unlinkAsync(req.file.path);
     if (!deletedTemplate) {
       return res.status(404).json({ error: "Template not found" });
     }
