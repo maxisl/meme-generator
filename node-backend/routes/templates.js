@@ -1,11 +1,11 @@
-import express from "express";
+const express = require("express");
 const router = express.Router();
-import mongoose from "mongoose";
-import multer from "multer";
-import { GridFsStorage } from "multer-gridfs-storage";
-import Template from "../models/template";
-import path from "path";
-import { nanoid } from "nanoid";
+const mongoose = require("mongoose");
+const multer = require("multer");
+const GridFsStorage = require("multer-gridfs-storage").GridFsStorage;
+const Template = require("../models/template");
+const path = require("path");
+const { nanoid } = require("nanoid");
 
 // change now to current timestamp in the GMT+1 time zone
 const now = new Date();
@@ -129,5 +129,25 @@ router.post("/", upload.single("template"), async (req, res) => {
 TODO TEMPLATES DELETE
 1. DeleteTemplate           (/:id)
 */
+
+// DELETE ALL TEMPLATES
+router.delete("/all", async (req, res) => {
+  try {
+    await Template.deleteMany({});
+    res.send("All templates deleted");
+  } catch (error) {
+    res.status(500).send({ error: error.message });
+  }
+});
+
+// DELETE TEMPLATE BY ID
+router.delete("/:id", async (req, res) => {
+  try {
+    await Template.findByIdAndDelete(req.params.id);
+  } catch (error) {
+    res.status(500).send({ error: error.message });
+  }
+  // TODO check if user that wants to delete is original uploader
+});
 
 module.exports = router;
