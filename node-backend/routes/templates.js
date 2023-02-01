@@ -1,11 +1,11 @@
-var express = require("express");
-var router = express.Router();
-const mongoose = require("mongoose");
-const multer = require("multer");
-const path = require("path");
-const GridFsStorage = require("multer-gridfs-storage").GridFsStorage;
-const Template = require("../models/template");
-const crypto = require("crypto");
+import express from "express";
+const router = express.Router();
+import mongoose from "mongoose";
+import multer from "multer";
+import { GridFsStorage } from "multer-gridfs-storage";
+import Template from "../models/template";
+import path from "path";
+import { nanoid } from "nanoid";
 
 // change now to current timestamp in the GMT+1 time zone
 const now = new Date();
@@ -19,7 +19,18 @@ const storage = multer.diskStorage({
   },
 });
 
-const upload = multer({ storage: storage });
+const uploadFilter = (req, file, cb) => {
+  if (file.mimetype === "image/jpeg" || file.mimetype === "image/png") {
+    cb(null, true);
+  } else {
+    cb(new Error("Filetype not accepted"), false);
+  }
+};
+
+const upload = multer({
+  storage: storage,
+  fileFilter: uploadFilter,
+});
 
 /*
 TODO TEMPLATES GET
@@ -71,48 +82,31 @@ router.post("/upload/file", upload.single("template"), async (req, res) => {
     return res.status(400).json({ success: false });
   }
   const file = req.file;
-  // generate a unique 8-byte hexadecimal identifier which is appended to front of file name
-  const uniqueIdentifier = crypto.randomBytes(8).toString("hex");
-  const fileName = `${uniqueIdentifier}-${file.originalname}`;
+
   const filePath = path.join(__dirname, "uploads", fileName);
 
-  file.mv(filePath, async (err) => {
-    // create a new template instance
-    const templateName = req.body.name || req.file.originalname;
-    const template = await new Template({
-      _id: new mongoose.Types.ObjectId(),
-      author: req.body._id,
-      // TODO activate as soon as user can be logged in
-      // author: req.user._id,
-      date: now,
-      filename: req.file.originalname,
-      name: templateName,
-      path: req.file.id,
-    })
-      .save()
-      .then(() => {
-        res.json({
-          success: true,
-          template: template,
-        });
-      })
-      .catch((err) => {
-        return res.status(500).send(err);
-      });
-  });
-});
 */
 
 router.post("/", upload.single("template"), async (req, res) => {
   console.log(req.file);
-  const template = new Template({
+  const originalName = req.file.filename || req.file.originalname;
+  const fileId = nanoid();
+  const ending = path.extname(req.file.originalname) || ".jpg";
+  const fileName = `${originalName}${fileId}${ending}`;
+  const filePath = path.join(
+    "uploads/templates",
+    `${now.getFullYear()}-${now.getMonth() + 1}`,
+    fileName
+  );
+  const template = await new Template({
     _id: new mongoose.Types.ObjectId(),
     author: req.body._id,
     // TODO activate as soon as user can be logged in
     // author: req.user._id,
     date: now,
-    filename: req.file.filename,
+    filename: fileName,
     name: req.body.name,
+    path: filePath,
   });
   template
     .save()
@@ -120,9 +114,7 @@ router.post("/", upload.single("template"), async (req, res) => {
       console.log("Result: " + result);
       res.status(201).json({
         message: "Template created successfully",
-        createdTemplate: {
-          _id: result._id,
-        },
+        template,
       });
     })
     .catch((err) => {
