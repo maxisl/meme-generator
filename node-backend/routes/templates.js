@@ -5,7 +5,6 @@ const multer = require("multer");
 const Template = require("../models/template");
 const path = require("path");
 const { nanoid } = require("nanoid");
-const Meme = require("../models/meme");
 const fs = require("fs");
 const { promisify } = require("util");
 const unlinkAsync = promisify(fs.unlink);
@@ -22,9 +21,9 @@ const storage = multer.diskStorage({
     cb(null, "./uploads/");
   },
   filename: function (req, file, cb) {
-    /* generates a "unique" name - not collision proof but unique enough for small sized applications */
+    // generate a "unique" name
     let id = nanoid();
-    /* need to use the file's mimetype because the file name may not have an extension at all */
+    // need to use the file's mimetype because the file name may not have an extension at all
     let ext = mime.extension(file.mimetype);
     cb(null, `${id}.${ext}`);
   },
@@ -44,11 +43,11 @@ const upload = multer({
 });
 
 /**************************************************************
-/*
-TODO TEMPLATES GET
-1. GetAll                   (/)
-2. GetById                  (/:id)
-*/
+ /*
+ TODO TEMPLATES GET
+ 1. GetAll                   (/)
+ 2. GetById                  (/:id)
+ */
 
 // GET ALL TEMPLATES
 router.get("/", async (req, res) => {
@@ -65,11 +64,11 @@ router.get("/", async (req, res) => {
 // GET TEMPLATE BY ID
 router.get("/:templateId", async (req, res) => {
   try {
-    const template = await Meme.findById(req.params.templateId);
-    if (!meme) {
-      res.status(404).send("Meme not found");
+    const template = await Template.findById(req.params.templateId);
+    if (!template) {
+      res.status(404).send("Template not found");
     } else {
-      res.send(meme);
+      res.send(template);
     }
   } catch (error) {
     res.status(500).send(error);
@@ -77,24 +76,17 @@ router.get("/:templateId", async (req, res) => {
 });
 
 /**************************************************************
-/*
-TEMPLATES POST
-1. CreateTemplateWithFile   (/upload/file)
-2. TODO CreateTemplateWithURL    (/upload/url)
-*/
+ /*
+ TEMPLATES POST
+ 1. CreateTemplateWithFile   (/upload/file)
+ 2. TODO CreateTemplateWithURL    (/upload/url)
+ */
 
+// POST CREATE TEMPLATE WITH FILE
 router.post("/", upload.single("template"), async (req, res) => {
   console.log(req.file);
   const originalName = req.file.filename || req.file.originalname;
-  /* deactivated - generated in multer storage
-  const fileId = nanoid();
-  const ending = path.extname(req.file.originalname) || ".jpg";*/
   const fileName = `${originalName}`;
-  const filePath = path.join(
-    "uploads/templates",
-    `${now.getFullYear()}-${now.getMonth() + 1}`,
-    fileName
-  );
   const template = await new Template({
     _id: new mongoose.Types.ObjectId(),
     author: req.body._id,
@@ -103,7 +95,7 @@ router.post("/", upload.single("template"), async (req, res) => {
     date: now,
     filename: fileName,
     name: req.body.name,
-    path: filePath,
+    path: req.file.path,
   });
   template
     .save()
@@ -123,9 +115,9 @@ router.post("/", upload.single("template"), async (req, res) => {
 });
 
 /**************************************************************
-/*
-1. DeleteTemplate           (/:id)
-*/
+ /*
+ 1. DeleteTemplate           (/:id)
+ */
 
 // DELETE ALL TEMPLATES
 router.delete("/all", async (req, res) => {
@@ -137,12 +129,14 @@ router.delete("/all", async (req, res) => {
   }
 });
 
+// TODO delete image when template is deleted
 // DELETE TEMPLATE BY ID
 router.delete("/:templateId", async (req, res) => {
   try {
     const templateId = req.params.templateId;
     const deletedTemplate = await Template.findByIdAndRemove(templateId);
-    await unlinkAsync(req.file.path);
+    // const filepath = path.resolve(`uploads/${filename}`);
+    // TODO await unlinkAsync(filepath);
     if (!deletedTemplate) {
       return res.status(404).json({ error: "Template not found" });
     }
