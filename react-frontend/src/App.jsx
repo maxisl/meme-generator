@@ -1,13 +1,15 @@
 import logo from "./logo.svg";
 import "./App.css";
+import React from "react";
+import ReactDOM from "react-dom";
 
-function App() {
+/*function App() {
   return (
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
-          Test Works : Edit <code>src/App.js</code> and save to reload!
+          Test Works : Edit <code>src/App.jsx</code> and save to reload!
         </p>
         <a
           className="App-link"
@@ -20,6 +22,18 @@ function App() {
       </header>
     </div>
   );
-}
+}*/
 
-export default App;
+const App = () => {
+  return React.createElement(
+    "div",
+    {},
+    React.createElement("h1", {}, "Adopt Me!")
+  );
+};
+
+const container = document.getElementById("root");
+const root = ReactDOM.createRoot(container);
+root.render(React.createElement(App));
+
+// export default App;
