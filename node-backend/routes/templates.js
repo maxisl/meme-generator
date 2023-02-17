@@ -3,11 +3,7 @@ const router = express.Router();
 const mongoose = require("mongoose");
 const multer = require("multer");
 const Template = require("../models/template");
-const path = require("path");
 const { nanoid } = require("nanoid");
-const fs = require("fs");
-const { promisify } = require("util");
-const unlinkAsync = promisify(fs.unlink);
 const mime = require("mime-types");
 
 // change now to current timestamp in the GMT+1 time zone
