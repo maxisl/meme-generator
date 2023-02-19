@@ -14,7 +14,9 @@ function MemeCard() {
         .get(`http://localhost:3001/users/63c9a9a5abd0048bf96855a6`)
         .then((response) => {
           console.log(response.data);
-          setAuthor(response.data); // pass response data here
+          console.log(response.data);
+          setAuthor(response.data.user.name); // pass response data here
+          setLoadingAuthor(false);
         });
     } catch (error) {
       console.log(error);
@@ -37,15 +39,14 @@ function MemeCard() {
     return <div>Loading...</div>;
   }
 
-
   return (
     <div className="meme-card">
       {meme && (
         <>
+          <p>Author: {author}</p>
           <h2>{meme.title}</h2>
           <img src={meme.image} alt={meme.title} />
           <p>Tags: {meme.tags.join(", ")}</p>
-          {loadingAuthor ? <p>Loading author...</p> : <p>By: {author}</p>}
           <p>Likes: {meme.likeCount}</p>
           <p>Comments: {meme.commentCount}</p>
         </>
