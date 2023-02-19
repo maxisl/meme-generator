@@ -17,10 +17,10 @@ function UserList() {
 
   return (
     <div>
-      <h1>User List</h1>
+      <h4>User List</h4>
       {users.map((user) => (
         <div key={user._id}>
-          <h2>{user.name}</h2>
+          <p>{user.name}</p>
           <p>{user.email}</p>
         </div>
       ))}

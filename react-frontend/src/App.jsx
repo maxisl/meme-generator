@@ -21,13 +21,7 @@ function App() {
         </a>
       </div>
       <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        {/*<Meme name="Meme 1" author="Author 1" date="Today" />*/}
-        {/*<MemeCard />*/}
         <MemeList />
-        {/*<MemeGenerator />*/}
         <UserList />
       </div>
       <p className="read-the-docs">

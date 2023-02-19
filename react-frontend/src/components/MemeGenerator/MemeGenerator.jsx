@@ -1,60 +1,60 @@
-// TODO Meme Generator
-
-import React, { useState } from 'react';
-import axios from 'axios';
+import React, { useState } from "react";
 
 const MemeGenerator = () => {
-  // Initialize state for top and bottom text inputs
-  const [topText, setTopText] = useState('');
-  const [bottomText, setBottomText] = useState('');
+  const [template, setTemplate] = useState(null);
+  const [textTop, setTextTop] = useState("");
+  const [textBottom, setTextBottom] = useState("");
 
-  // Initialize state for random image URL
-  const [randomImg, setRandomImg] = useState('');
-
-  // Function to handle input changes
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    if (name === 'topText') {
-      setTopText(value);
-    } else if (name === 'bottomText') {
-      setBottomText(value);
-    }
+  const handleTemplateChange = (event) => {
+    setTemplate(event.target.value);
   };
 
-  // Function to handle form submission
+  const handleTextTopChange = (event) => {
+    setTextTop(event.target.value);
+  };
+
+  const handleTextBottomChange = (event) => {
+    setTextBottom(event.target.value);
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    // TODO should not be random - make a request to the API to get a random meme image
-    axios.get('http://localhost:3001/memes')
-    .then((response) => {
-      const memes = response.data.data.memes;
-      const randomIndex = Math.floor(Math.random() * memes.length);
-      const randomMeme = memes[randomIndex];
-      setRandomImg(randomMeme.url);
-    })
-    .catch((error) => {
-      console.error(error);
-    });
+    // Upload meme to server
   };
 
   return (
-    <div>
+    <div className="meme-generator">
+      <h2>Create a Meme</h2>
       <form onSubmit={handleSubmit}>
-        <label>
-          Top text:
-          <input type="text" name="topText" value={topText} onChange={handleInputChange} />
-        </label>
-        <br />
-        <label>
-          Bottom text:
-          <input type="text" name="bottomText" value={bottomText} onChange={handleInputChange} />
-        </label>
-        <br />
-        <button type="submit">Generate Meme</button>
+        <div className="form-group">
+          <label htmlFor="template-select">Select a template:</label>
+          <select id="template-select" onChange={handleTemplateChange}>
+            <option value="">Select a template</option>
+            <option value="1">Template 1</option>
+            <option value="2">Template 2</option>
+            <option value="3">Template 3</option>
+          </select>
+        </div>
+        <div className="form-group">
+          <label htmlFor="text-top">Top text:</label>
+          <input
+            type="text"
+            id="text-top"
+            value={textTop}
+            onChange={handleTextTopChange}
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="text-bottom">Bottom text:</label>
+          <input
+            type="text"
+            id="text-bottom"
+            value={textBottom}
+            onChange={handleTextBottomChange}
+          />
+        </div>
+        <button type="submit">Create Meme</button>
       </form>
-      {randomImg && (
-        <img src={randomImg} alt="Random meme" />
-      )}
     </div>
   );
 };
