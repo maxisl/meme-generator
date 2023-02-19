@@ -1,0 +1,1 @@
+// TODO individual card of each meme

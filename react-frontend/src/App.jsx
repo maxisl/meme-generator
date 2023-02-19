@@ -3,6 +3,7 @@ import reactLogo from "./assets/react.svg";
 import "./App.css";
 import Meme from "./components/Meme.jsx";
 import SearchParams from "./components/SearchParams.jsx";
+import UserList from "./components/UserList.jsx";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -30,6 +31,9 @@ function App() {
         </p>
         <p>
           <SearchParams />
+        </p>
+        <p>
+          <UserList />
         </p>
       </div>
       <p className="read-the-docs">
