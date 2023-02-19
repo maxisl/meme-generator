@@ -4,6 +4,8 @@ import "./App.css";
 import Meme from "./components/Meme.jsx";
 import SearchParams from "./components/SearchParams.jsx";
 import UserList from "./components/UserList.jsx";
+import MemeGenerator from "./components/MemeGenerator/MemeGenerator.jsx";
+import MemeList from "./components/MemeList/MemeList.jsx";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -30,7 +32,13 @@ function App() {
           <Meme name="Meme 1" author="Author 1" date="Today" />
         </p>
         <p>
+          <MemeList />
+        </p>
+        <p>
           <SearchParams />
+        </p>
+        <p>
+          <MemeGenerator />
         </p>
         <p>
           <UserList />
