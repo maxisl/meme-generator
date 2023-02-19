@@ -42,6 +42,9 @@ const authRouter = require("./routes/auth");
 
 const app = express();
 
+// disable etag headers on responses - avoid 304 not modified
+app.disable('etag');
+
 // add swagger ui
 const swaggerUi = require("swagger-ui-express");
 const swaggerJsDoc = require("swagger-jsdoc");

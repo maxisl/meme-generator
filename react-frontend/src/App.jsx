@@ -2,10 +2,10 @@ import { useState } from "react";
 import reactLogo from "./assets/react.svg";
 import "./App.css";
 import Meme from "./components/Meme.jsx";
-import SearchParams from "./components/SearchParams.jsx";
 import UserList from "./components/UserList.jsx";
 import MemeGenerator from "./components/MemeGenerator/MemeGenerator.jsx";
 import MemeList from "./components/MemeList/MemeList.jsx";
+import MemeCard from "./components/MemeList/MemeCard.jsx";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -25,24 +25,11 @@ function App() {
         <button onClick={() => setCount((count) => count + 1)}>
           count is {count}
         </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-        <p>
-          <Meme name="Meme 1" author="Author 1" date="Today" />
-        </p>
-        <p>
-          <MemeList />
-        </p>
-        <p>
-          <SearchParams />
-        </p>
-        <p>
-          <MemeGenerator />
-        </p>
-        <p>
-          <UserList />
-        </p>
+        <Meme name="Meme 1" author="Author 1" date="Today" />
+        <MemeCard />
+        {/*<MemeList />*/}
+        <MemeGenerator />
+        <UserList />
       </div>
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
