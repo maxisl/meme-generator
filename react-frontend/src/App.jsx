@@ -20,15 +20,14 @@ function App() {
           <img src={reactLogo} className="logo react" alt="React logo" />
         </a>
       </div>
-      <h1>Future home page of the meme generator !!!</h1>
       <div className="card">
         <button onClick={() => setCount((count) => count + 1)}>
           count is {count}
         </button>
-        <Meme name="Meme 1" author="Author 1" date="Today" />
+        {/*<Meme name="Meme 1" author="Author 1" date="Today" />*/}
         <MemeCard />
         {/*<MemeList />*/}
-        <MemeGenerator />
+        {/*<MemeGenerator />*/}
         <UserList />
       </div>
       <p className="read-the-docs">

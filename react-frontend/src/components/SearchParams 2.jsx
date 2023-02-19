@@ -1,3 +1,4 @@
+/*
 import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
@@ -17,10 +18,10 @@ const SearchParams = () => {
     requestPets();
   }, []); // set dependency array to empty array to run only once
 
-  useEffect(() => {
+  /!*useEffect(() => {
     requestUsers().then((r) => console.log(r));
   }, []); // set dependency array to empty array to run only once
-
+*!/
   async function requestPets() {
     const res = await fetch(
       `http://pets-v2.dev-apis.com/pets?animal=${animal}&location=${location}&breed=${breed}`
@@ -29,7 +30,7 @@ const SearchParams = () => {
     setPets(json.pets);
   }
 
-  /*async function requestUsers() {
+  /!*async function requestUsers() {
     try {
       const res = await fetch(`http://localhost:3001/users`);
       const json = await res.json().then((r) => console.log(r));
@@ -38,9 +39,9 @@ const SearchParams = () => {
     } catch (err) {
       console.error(err.message);
     }
-  }*/
+  }*!/
 
-  function requestUsers() {
+  /!*function requestUsers() {
     fetch('http://localhost:3001/users')
     .then((response) => {
       if (!response.ok) {
@@ -54,7 +55,7 @@ const SearchParams = () => {
     .catch((error) => {
       console.error('Error fetching users: ', error);
     });
-  }
+  }*!/
 
 
   return (
@@ -110,7 +111,7 @@ const SearchParams = () => {
         </label>
         <button>Submit</button>
       </form>
-      <div>
+      {/!*<div>
         <h1>User List</h1>
         <ul>
           {users && users.map(user => (
@@ -120,9 +121,10 @@ const SearchParams = () => {
             </li>
           ))}
         </ul>
-      </div>
+      </div>*!/}
     </div>
   );
 };
 
 export default SearchParams;
+*/

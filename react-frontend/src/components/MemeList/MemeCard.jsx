@@ -1,52 +1,55 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-function MemeCard(props) {
+function MemeCard() {
   const [author, setAuthor] = useState(null);
   const [meme, setMeme] = useState(null);
+  const [loadingAuthor, setLoadingAuthor] = useState(true);
+
+  const id = "63caeb60db8428f94fc619e0";
 
   const fetchAuthor = async (id) => {
     try {
-      const response = await axios.get(`http://localhost:3001/users/${id}`);
-      const data = response.data;
-      setAuthor(data.name);
+      await axios
+        .get(`http://localhost:3001/users/63c9a9a5abd0048bf96855a6`)
+        .then((response) => {
+          console.log(response.data);
+          setAuthor(response.data); // pass response data here
+        });
     } catch (error) {
       console.log(error);
     }
   };
-
-  const fetchMeme = async () => {
-    try {
-      const response = await axios.get(`http://localhost:3001/memes`);
-      const memes = response.data.data.memes;
-      const randomIndex = Math.floor(Math.random() * memes.length);
-      const randomMeme = memes[randomIndex];
-      setMeme(randomMeme);
-      // fetchAuthor(randomMeme.author);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  /*useEffect(() => {
-    if (props.meme.author) {
-      fetchAuthor(props.meme.author);
-    }
-  }, [props.meme.author]);
-*/
 
   useEffect(() => {
-    fetchMeme();
+    try {
+      axios.get(`http://localhost:3001/memes/${id}`).then((response) => {
+        console.log(response.data);
+        setMeme(response.data); // pass response data here
+        fetchAuthor(response.data.author);
+      });
+    } catch (error) {
+      console.log(error);
+    }
   }, []);
+
+  if (!meme /*|| !author*/) {
+    return <div>Loading...</div>;
+  }
+
 
   return (
     <div className="meme-card">
-      <h2>{props.meme.title}</h2>
-      <img src={props.meme.image} alt={props.meme.title} />
-      <p>Tags: {props.meme.tags.join(", ")}</p>
-      {/*<p>By: {author ? author : 'Loading...'}</p>*/}
-      <p>Likes: {props.meme.likeCount}</p>
-      <p>Comments: {props.meme.commentCount}</p>
+      {meme && (
+        <>
+          <h2>{meme.title}</h2>
+          <img src={meme.image} alt={meme.title} />
+          <p>Tags: {meme.tags.join(", ")}</p>
+          {loadingAuthor ? <p>Loading author...</p> : <p>By: {author}</p>}
+          <p>Likes: {meme.likeCount}</p>
+          <p>Comments: {meme.commentCount}</p>
+        </>
+      )}
     </div>
   );
 }
