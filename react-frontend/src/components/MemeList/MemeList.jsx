@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import MemeCard from "./MemeCard";
+import GenerateMemeButton from "./GenerateMemeButton";
 import "./MemeList.css";
 import axios from "axios";
 
@@ -18,8 +19,8 @@ const MemeList = () => {
   }, []);
 
   return (
-    <div className="meme-list-container"> {/* add the container class */}
-      <div className="meme-list"> {/* add the list class */}
+    <div className="meme-list-container">
+      <div className="meme-list">
       {memes.map((meme) => (
         <MemeCard key={meme._id} meme={meme}
         />
