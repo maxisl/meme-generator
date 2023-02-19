@@ -25,8 +25,8 @@ function App() {
           count is {count}
         </button>
         {/*<Meme name="Meme 1" author="Author 1" date="Today" />*/}
-        <MemeCard />
-        {/*<MemeList />*/}
+        {/*<MemeCard />*/}
+        <MemeList />
         {/*<MemeGenerator />*/}
         <UserList />
       </div>
