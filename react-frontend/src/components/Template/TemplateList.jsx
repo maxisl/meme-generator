@@ -10,7 +10,6 @@ const TemplateList = () => {
     try {
       axios.get(`http://localhost:3001/templates`).then((response) => {
         setTemplates(response.data);
-        console.log(response.data);
       });
     } catch (error) {
       console.log(error);

@@ -3,6 +3,10 @@
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 30px;
   overflow: auto;
+  border-radius: 10px;
+  border: 1px solid gray;
+  padding: 20px;
+  margin: 20px;
 }
 
 .meme-list {

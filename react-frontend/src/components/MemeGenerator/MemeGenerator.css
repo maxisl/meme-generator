@@ -1,3 +1,11 @@
-.meme-generator{
+.meme-generator {
   background: lightgray;
+  border-radius: 10px;
+  border: 1px solid gray;
+  padding: 20px;
+  margin: 20px;
+}
+
+.template-list-container {
+  width: 100%;
 }

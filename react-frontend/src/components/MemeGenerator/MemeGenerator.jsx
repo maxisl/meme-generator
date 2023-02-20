@@ -18,10 +18,10 @@ const MemeGenerator = () => {
 
   return (
     <div className="meme-generator">
-      <div className="template-container">
+      {/*<div className="template-container">
         selectedTemplate ? <TemplateCard template={selectedTemplate} /> :
         "Select a template"}
-      </div>
+      </div>*/}
       <div className="input-container">
         <InputText />
       </div>
