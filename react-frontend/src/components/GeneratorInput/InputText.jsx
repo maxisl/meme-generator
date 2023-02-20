@@ -44,7 +44,6 @@ const InputText = () => {
             onChange={handleTextBottomChange}
           />
         </div>
-        <label htmlFor="template-select">Select a template:</label>
       </div>
     </form>
   );

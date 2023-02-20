@@ -21,7 +21,10 @@
   object-position: center;
   object-fit: cover;
   margin-bottom: 5px;
+  border-radius: 10px;
 }
+
+
 
 .template-card h3 {
   font-size: 18px;

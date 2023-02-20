@@ -22,8 +22,6 @@ function App() {
       </div>
       <div className="card">
         <MemeGenerator />
-        <TemplateList />
-        <button type="submit">Create Meme</button>
         <MemeList />
       </div>
       <p className="read-the-docs">

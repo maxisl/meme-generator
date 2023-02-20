@@ -5,6 +5,7 @@ import "./TemplateList.css";
 
 const TemplateList = () => {
   const [templates, setTemplates] = useState([]);
+  const [selectedTemplate, setSelectedTemplate] = useState(null);
 
   useEffect(() => {
     try {
