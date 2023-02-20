@@ -3,7 +3,7 @@ import reactLogo from "./assets/react.svg";
 import "./App.css";
 import Meme from "./components/Meme.jsx";
 import UserList from "./components/UserList.jsx";
-import MemeGenerator from "./components/MemeGenerator/MemeGenerator.jsx";
+import TemplateList from "./components/Template/TemplateList.jsx";
 import MemeList from "./components/MemeList/MemeList.jsx";
 import MemeCard from "./components/MemeList/MemeCard.jsx";
 import GenerateMemeButton from "./components/MemeList/GenerateMemeButton.jsx";
@@ -23,10 +23,8 @@ function App() {
         <h2>MemeGen</h2>
       </div>
       <div className="card">
-        <GenerateMemeButton />
-        <MemeGenerator />
+        <TemplateList />
         <MemeList />
-        {/*<MemeGenerator />*/}
       </div>
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import MemeCard from "./MemeCard";
-import GenerateMemeButton from "./GenerateMemeButton";
 import "./MemeList.css";
 import axios from "axios";
 

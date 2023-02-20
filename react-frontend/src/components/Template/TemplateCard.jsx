@@ -6,11 +6,23 @@ function TemplateCard(props) {
   const [author, setAuthor] = useState(null);
   const [template, setTemplate] = useState(null);
 
+  const fetchAuthor = async (id) => {
+    try {
+      await axios
+      .get(`http://localhost:3001/users/${id}`)
+      .then((response) => {
+        setAuthor(response.data.user.name); // pass response data here
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     try {
       axios.get(`http://localhost:3001/templates/${props.template._id}`).then((response) => {
         setTemplate(response.data); // pass response data here
-        fetchAuthor(response.data.author);
+        // fetchAuthor(response.data.author);
       });
     } catch (error) {
       console.log(error);
@@ -24,12 +36,11 @@ function TemplateCard(props) {
   return (
     <div className="meme-card">
       <div className="meme-card__image-container">
-        <img src={template.image} alt={template.title} className="meme-card__image" />
+        <img src={`http://localhost:3001/${template.path}`} alt={template.name} className="meme-card__image" />
       </div>
       <div className="meme-card__content">
-        <h2 className="meme-card__title">{template.title}</h2>
-        <p className="meme-card__author">Author: {author}</p>
-        <p className="meme-card__tags">Tags: {template.tags.join(", ")}</p>
+        <h2 className="meme-card__title">{template.name}</h2>
+        {/*<p className="meme-card__author">Author: {author}</p>*/}
       </div>
     </div>
   );

@@ -225,6 +225,8 @@ users.findOne({basicauthtoken: req.headers.authorization}).then(user => {
 })*/
 
 app.use(express.static(path.join(__dirname, "public")));
+// serve static files in the "uploads" directory
+app.use("/uploads", express.static("uploads"));
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
 app.use("/memes", memesRouter);
