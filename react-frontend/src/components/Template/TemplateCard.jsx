@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./TemplateCard.css";
 
-function TemplateCard({ props, setSelectedTemplate }) {
+function TemplateCard(props) {
   const [template, setTemplate] = useState(null);
 
   const handleTemplateSelect = (template) => {
