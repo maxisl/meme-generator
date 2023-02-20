@@ -34,16 +34,12 @@ function TemplateCard(props) {
   }
 
   return (
-    <div className="meme-card">
-      <div className="meme-card__image-container">
-        <img src={`http://localhost:3001/${template.path}`} alt={template.name} className="meme-card__image" />
-      </div>
-      <div className="meme-card__content">
-        <h2 className="meme-card__title">{template.name}</h2>
-        {/*<p className="meme-card__author">Author: {author}</p>*/}
-      </div>
+    <div className="template-card">
+      <img src={`http://localhost:3001/${template.path}`} alt={template.name} />
+      <h3>{template.name}</h3>
     </div>
   );
+
 }
 
 export default TemplateCard;
