@@ -17,20 +17,12 @@ const TemplateList = () => {
     }
   }, []);
 
-
-
-
-
   return (
     <div className="template-list-container">
       <div className="template-list">
-          <div className="template-list-container">
-            <div className="template-list">
-              {templates.map((template) => (
-                <TemplateCard key={template._id} template={template} />
-              ))}
-            </div>
-          </div>
+        {templates.map((template) => (
+          <TemplateCard key={template._id} template={template} />
+        ))}
       </div>
     </div>
   );
