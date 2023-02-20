@@ -1,13 +1,10 @@
 import React, { useState } from "react";
 import reactLogo from "./assets/react.svg";
 import "./App.css";
-import Meme from "./components/Meme.jsx";
-import UserList from "./components/UserList.jsx";
 import TemplateList from "./components/Template/TemplateList.jsx";
 import MemeList from "./components/MemeList/MemeList.jsx";
-import MemeCard from "./components/MemeList/MemeCard.jsx";
-import GenerateMemeButton from "./components/MemeList/GenerateMemeButton.jsx";
-import InputText from "./components/GeneratorInput/InputText.jsx";
+import MemeGenerator from "./components/MemeGenerator/MemeGenerator.jsx";
+
 
 function App() {
   const [count, setCount] = useState(0);
@@ -24,7 +21,7 @@ function App() {
         <h2>MemeGen</h2>
       </div>
       <div className="card">
-        <InputText />
+        <MemeGenerator />
         <TemplateList />
         <button type="submit">Create Meme</button>
         <MemeList />
