@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import "../MemeGenerator/MemeGenerator.css";
 import InputText from "../GeneratorInput/InputText.jsx";
 import TemplateList from "../Template/TemplateList.jsx";
-import TemplateCard from "../Template/TemplateCard.jsx";
 
 const MemeGenerator = () => {
   const [selectedTemplate, setSelectedTemplate] = useState("");
@@ -25,7 +24,8 @@ const MemeGenerator = () => {
       <div className="input-container">
         <InputText />
       </div>
-      <div className="template-list-container">
+
+      <div className="template-list-container-generator">
         <TemplateList onTemplateSelect={handleTemplateSelect} />
       </div>
     </div>
