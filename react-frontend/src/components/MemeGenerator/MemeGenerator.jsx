@@ -1,9 +1,22 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import TemplateCard from "../Template/TemplateCard.jsx";
 
 const MemeGenerator = () => {
   const [template, setTemplate] = useState(null);
+  const [templates, setTemplates] = useState(null);
   const [textTop, setTextTop] = useState("");
   const [textBottom, setTextBottom] = useState("");
+
+  useEffect(() => {
+    try {
+      axios.get(`http://localhost:3001/templates`).then((response) => {
+        setTemplates(response.data);
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
 
   const handleTemplateChange = (event) => {
     setTemplate(event.target.value);
@@ -22,6 +35,7 @@ const MemeGenerator = () => {
     // Upload meme to server
   };
 
+
   return (
     <div className="meme-generator">
       <h2>Create a Meme</h2>
@@ -34,6 +48,9 @@ const MemeGenerator = () => {
             <option value="2">Template 2</option>
             <option value="3">Template 3</option>
           </select>
+          <div>
+            <TemplateCard template={ template } />
+          </div>
         </div>
         <div className="form-group">
           <label htmlFor="text-top">Top text:</label>

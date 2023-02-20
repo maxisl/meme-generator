@@ -24,6 +24,7 @@ function App() {
       </div>
       <div className="card">
         <GenerateMemeButton />
+        <MemeGenerator />
         <MemeList />
         {/*<MemeGenerator />*/}
       </div>
