@@ -24,14 +24,12 @@ function TemplateCard(props) {
   }
 
   return (
-    <div className="template-card-container">
       <div className="template-card">
         <img
           src={`http://localhost:3001/${template.path}`}
           alt={template.name}
         />
       </div>
-    </div>
   );
 }
 
