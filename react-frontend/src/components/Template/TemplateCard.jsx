@@ -6,7 +6,6 @@ function TemplateCard(props) {
   const [template, setTemplate] = useState(null);
 
   const handleTemplateSelect = () => {
-    alert("Template " + template._id + " selected!");
     props.setSelectedTemplate(template);
   };
 

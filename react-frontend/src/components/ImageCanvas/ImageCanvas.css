@@ -1,5 +1,16 @@
-.image-canvas{
+.input-container {
+  text-align: left;
+}
+
+.image-canvas {
+  display: flex;
+  align-items: center;
+}
+
+canvas {
   background: white;
+  flex: 2;
+  margin-left: 10px;
   border-radius: 10px;
   border: 1px solid gray;
 }
