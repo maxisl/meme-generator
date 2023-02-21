@@ -6,9 +6,19 @@ import ImageCanvas from "../ImageCanvas/ImageCanvas.jsx";
 
 const MemeGenerator = () => {
   const [selectedTemplate, setSelectedTemplate] = useState("");
+  const [topText, setTopText] = useState("");
+  const [bottomText, setBottomText] = useState("");
 
   const handleTemplateSelect = (template) => {
     setSelectedTemplate(template);
+  };
+
+  const handleTextTopChange = (event) => {
+    setTopText(event.target.value);
+  };
+
+  const handleTextBottomChange = (event) => {
+    setBottomText(event.target.value);
   };
 
   const handleSubmit = (event) => {
@@ -18,14 +28,18 @@ const MemeGenerator = () => {
 
   return (
     <div className="meme-generator">
-      <ImageCanvas selectedTemplate={selectedTemplate}/>
-      {/*<div className="template-container">
-        selectedTemplate ? <TemplateCard template={selectedTemplate} /> :
-        "Select a template"}
-      </div>*/}
+      <ImageCanvas selectedTemplate={selectedTemplate} />
       <label htmlFor="template-select">Select a template:</label>
       <div className="template-list-container-generator">
         <TemplateList setSelectedTemplate={handleTemplateSelect} />
+      </div>
+      <div className="text-input-container">
+        <InputText
+          topText={topText}
+          setTopText={handleTextTopChange}
+          bottomText={bottomText}
+          setBottomText={handleTextBottomChange}
+        />
       </div>
       <button type="submit">Create Meme</button>
     </div>
