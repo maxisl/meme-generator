@@ -2,33 +2,43 @@ import React, { useState } from "react";
 import "./ImageCanvas.css";
 import InputText from "../GeneratorInput/InputText.jsx";
 
-// receives the selected template as props.selectedTemplate
 const ImageCanvas = (props) => {
   const {fontSize, fontColor, fontFamily } = props;
-  //const text = props.textTop + " " + props.textBottom;
+  const [canvasSize, setCanvasSize] = useState({width: 500, height: 350});
   const text = "Hello World";
-  const image = `http://localhost:3001/${props.selectedTemplate.path}`;
 
   const canvasRef = React.useRef(null);
-
-  console.log("selectedTemplate: " + props.selectedTemplate._id);
-  console.log("selectedTemplate image: " + props.selectedTemplate.path);
 
   React.useEffect(() => {
     const canvas = canvasRef.current;
     const context = canvas.getContext("2d");
     const imageObj = new Image();
-    imageObj.src = image;
+    imageObj.src = `http://localhost:3001/${props.selectedTemplate.path}`;
     imageObj.onload = () => {
-      const x = (canvas.width - imageObj.width) / 2;
-      const y = (canvas.height - imageObj.height) / 2;
+      const aspectRatio = imageObj.width / imageObj.height;
+      const canvasWidth = canvasSize.width;
+      const canvasHeight = canvasWidth / aspectRatio;
+      canvas.height = canvasHeight;
+      const x = (canvasWidth - imageObj.width) / 2;
+      const y = (canvasHeight - imageObj.height) / 2;
       context.drawImage(imageObj, x, y);
       context.font = `${fontSize}px ${fontFamily}`;
       context.fillStyle = fontColor;
       context.textAlign = "center";
       context.fillText(text, canvas.width / 2, canvas.height / 2);
     };
-  }, [image, text, fontSize, fontColor, fontFamily]);
+  }, [props.selectedTemplate, canvasSize, fontSize, fontColor, fontFamily, text]);
+
+  const handleImageLoad = (event) => {
+    const canvas = canvasRef.current;
+    const imageObj = event.target;
+    const aspectRatio = imageObj.width / imageObj.height;
+    const canvasWidth = 500;
+    const canvasHeight = canvasWidth / aspectRatio;
+    setCanvasSize({width: canvasWidth, height: canvasHeight});
+    const context = canvas.getContext("2d");
+    context.clearRect(0, 0, canvas.width, canvas.height);
+  }
 
   return (
     <div className="image-inputs-and-canvas ">
@@ -37,6 +47,7 @@ const ImageCanvas = (props) => {
           <InputText />
         </div>
         <canvas ref={canvasRef} width={500} height={350} />
+        <img onLoad={handleImageLoad} src={`http://localhost:3001/${props.selectedTemplate.path}`} alt="Selected template" style={{display: "none"}} />
       </div>
     </div>
   );

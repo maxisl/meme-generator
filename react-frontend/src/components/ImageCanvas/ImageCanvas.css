@@ -1,3 +1,5 @@
+@import url('//fonts.googleapis.com/css?family=Josefin+Sans');
+
 .input-container {
   text-align: left;
 }
@@ -6,11 +8,15 @@
   display: flex;
   align-items: center;
 }
-
+.div {
+  font-family: 'Anton', serif;
+}
 canvas {
   background: white;
   flex: 2;
   margin-left: 10px;
   border-radius: 10px;
   border: 1px solid gray;
+  font-family: 'Anton', serif;
 }
+
