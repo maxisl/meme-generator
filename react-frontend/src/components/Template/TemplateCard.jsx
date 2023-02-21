@@ -5,8 +5,9 @@ import "./TemplateCard.css";
 function TemplateCard(props) {
   const [template, setTemplate] = useState(null);
 
-  const handleTemplateSelect = (template) => {
-    setSelectedTemplate(template);
+  const handleTemplateSelect = () => {
+    alert("Template " + template._id + " selected!");
+    props.setSelectedTemplate(template);
   };
 
   useEffect(() => {
@@ -28,7 +29,11 @@ function TemplateCard(props) {
 
   return (
     <div className="template-card">
-      <img src={`http://localhost:3001/${template.path}`} alt={template.name} />
+      <img
+        src={`http://localhost:3001/${template.path}`}
+        alt={template.name}
+        onClick={handleTemplateSelect}
+      />
     </div>
   );
 }

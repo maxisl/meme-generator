@@ -1,10 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import "./ImageCanvas.css";
 import InputText from "../GeneratorInput/InputText.jsx";
 
+// receives the selected template as props.selectedTemplate
 const ImageCanvas = (props) => {
   const { image, text, fontSize, fontColor, fontFamily } = props;
   const canvasRef = React.useRef(null);
+
+  console.log("selectedTemplate: " + props.selectedTemplate._id);
+
 
   React.useEffect(() => {
     const canvas = canvasRef.current;

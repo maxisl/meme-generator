@@ -3,9 +3,9 @@ import axios from "axios";
 import TemplateCard from "./TemplateCard.jsx";
 import "./TemplateList.css";
 
-const TemplateList = () => {
+const TemplateList = (props) => {
   const [templates, setTemplates] = useState([]);
-  const [selectedTemplate, setSelectedTemplate] = useState(null);
+
 
   useEffect(() => {
     try {
@@ -21,11 +21,12 @@ const TemplateList = () => {
     <div className="template-list-container">
       <div className="template-list">
         {templates.map((template) => (
-          <TemplateCard key={template._id} template={template} />
+          <TemplateCard key={template._id} template={template} setSelectedTemplate={props.setSelectedTemplate}/>
         ))}
       </div>
     </div>
   );
 };
+
 
 export default TemplateList;

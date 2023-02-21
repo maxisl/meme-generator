@@ -2,13 +2,8 @@ import React, { useState } from "react";
 import "./InputText.css";
 
 const InputText = () => {
-  const [template, setTemplate] = useState("");
   const [textTop, setTextTop] = useState("");
   const [textBottom, setTextBottom] = useState("");
-
-  const handleTemplateChange = (event) => {
-    setTemplate(event.target.value);
-  };
 
   const handleTextTopChange = (event) => {
     setTextTop(event.target.value);

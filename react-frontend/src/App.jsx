@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import reactLogo from "./assets/react.svg";
-import mememucLogo from "./assets/MEMEMUC.png";
+import mememucLogo from "./assets/MEMEMUC_rounded.png";
 import "./App.css";
 import TemplateList from "./components/Template/TemplateList.jsx";
 import MemeList from "./components/MemeList/MemeList.jsx";
@@ -8,7 +8,6 @@ import MemeGenerator from "./components/MemeGenerator/MemeGenerator.jsx";
 
 
 function App() {
-  const [count, setCount] = useState(0);
 
   return (
     <div className="App">

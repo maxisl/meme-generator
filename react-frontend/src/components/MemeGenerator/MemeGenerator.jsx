@@ -18,14 +18,14 @@ const MemeGenerator = () => {
 
   return (
     <div className="meme-generator">
-      <ImageCanvas />
+      <ImageCanvas selectedTemplate={selectedTemplate}/>
       {/*<div className="template-container">
         selectedTemplate ? <TemplateCard template={selectedTemplate} /> :
         "Select a template"}
       </div>*/}
       <label htmlFor="template-select">Select a template:</label>
       <div className="template-list-container-generator">
-        <TemplateList onTemplateSelect={handleTemplateSelect} />
+        <TemplateList setSelectedTemplate={handleTemplateSelect} />
       </div>
       <button type="submit">Create Meme</button>
     </div>
