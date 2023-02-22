@@ -8,6 +8,10 @@ const MemeGenerator = () => {
   const [topText, setTopText] = useState("");
   const [bottomText, setBottomText] = useState("");
   const [fontSize, setFontSize] = useState(50);
+  const [positionBottomX, setPositionBottomX] = useState(250);
+  const [positionBottomY, setPositionBottomY] = useState(150);
+  const [positionTopX, setPositionTopX] = useState(250);
+  const [positionTopY, setPositionTopY] = useState(350);
 
   const handleTemplateSelect = (template) => {
     setSelectedTemplate(template);
@@ -21,9 +25,19 @@ const MemeGenerator = () => {
     setBottomText(event.target.value);
   };
 
-  const handleFontSizeChange = (event) => {
-    setFontSize(event.target.value);
+  const handleXBottomChange = (event) => {
+    setPositionBottomX(event.target.value);
   };
+  const handleYBottomChange = (event) => {
+    setPositionBottomY(event.target.value);
+  };
+  const handleXTopChange = (event) => {
+    setPositionTopX(event.target.value);
+  };
+  const handleYTopChange = (event) => {
+    setPositionTopY(event.target.value);
+  };
+
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -53,16 +67,16 @@ const MemeGenerator = () => {
                 onChange={handleBottomTextChange}
               />
             </div>
-            {/*<div className="text-x-bottom">
-              <label htmlFor="text-x-bottom">x:</label>
+            <div className="position-x-bottom">
+              <label htmlFor="position-x-bottom">x bottom:</label>
               <input
                 type="text"
-                id="text-bottom"
-                value={bottomText}
+                id="position-x-bottom"
+                value={positionBottomX}
                 onChange={handleBottomTextChange}
               />
             </div>
-            */}
+
             <div className="font-size-input">
               <label htmlFor="font-size">Text Size: </label>
               <input
