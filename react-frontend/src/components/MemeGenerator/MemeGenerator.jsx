@@ -7,6 +7,7 @@ const MemeGenerator = () => {
   const [selectedTemplate, setSelectedTemplate] = useState("");
   const [topText, setTopText] = useState("");
   const [bottomText, setBottomText] = useState("");
+  const [fontSize, setFontSize] = useState(50);
 
   const handleTemplateSelect = (template) => {
     setSelectedTemplate(template);
@@ -18,6 +19,10 @@ const MemeGenerator = () => {
 
   const handleBottomTextChange = (event) => {
     setBottomText(event.target.value);
+  };
+
+  const handleFontSizeChange = (event) => {
+    setFontSize(event.target.value);
   };
 
   const handleSubmit = (event) => {
@@ -48,12 +53,31 @@ const MemeGenerator = () => {
                 onChange={handleBottomTextChange}
               />
             </div>
+            {/*<div className="text-x-bottom">
+              <label htmlFor="text-x-bottom">x:</label>
+              <input
+                type="text"
+                id="text-bottom"
+                value={bottomText}
+                onChange={handleBottomTextChange}
+              />
+            </div>
+            */}
+            <div className="font-size-input">
+              <label htmlFor="font-size">Text Size: </label>
+              <input
+                type="text"
+                value={fontSize}
+                onChange={handleFontSizeChange}
+              />
+            </div>
           </div>
           <div className="image-canvas-container">
             <ImageCanvas
               selectedTemplate={selectedTemplate}
               topText={topText}
               bottomText={bottomText}
+              textSize={fontSize}
             />
           </div>
         </div>

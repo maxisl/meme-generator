@@ -2,9 +2,11 @@ import React, { useState } from "react";
 import "./ImageCanvas.css";
 
 const ImageCanvas = (props) => {
-  const { fontSize, fontColor, fontFamily } = props;
+  const { fontColor, fontFamily } = props;
   const [canvasSize, setCanvasSize] = useState({ width: 500, height: 350 });
-  const text = props.topText;
+  const topText = props.topText;
+  const bottomText = props.bottomText;
+  const fontSize = props.textSize;
 
   const canvasRef = React.useRef(null);
 
@@ -24,7 +26,8 @@ const ImageCanvas = (props) => {
       context.font = `${fontSize}px ${fontFamily}`;
       context.fillStyle = fontColor;
       context.textAlign = "center";
-      context.fillText(text, canvas.width / 2, canvas.height / 2);
+      context.fillText(bottomText, canvas.width / 2, (canvas.height / 3) * 2);
+      context.fillText(topText, canvas.width / 2, canvas.height / 3);
     };
   }, [
     props.selectedTemplate,
@@ -32,7 +35,8 @@ const ImageCanvas = (props) => {
     fontSize,
     fontColor,
     fontFamily,
-    text,
+    topText,
+    bottomText
   ]);
 
   const handleImageLoad = (event) => {
