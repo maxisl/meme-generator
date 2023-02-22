@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from "react";
-import "../MemeGenerator/MemeGenerator.css";
-import InputText from "../GeneratorInput/InputText.jsx";
+import React, { useState } from "react";
 import TemplateList from "../Template/TemplateList.jsx";
 import ImageCanvas from "../ImageCanvas/ImageCanvas.jsx";
+import "./MemeGenerator.css";
 
 const MemeGenerator = () => {
   const [selectedTemplate, setSelectedTemplate] = useState("");
@@ -13,11 +12,11 @@ const MemeGenerator = () => {
     setSelectedTemplate(template);
   };
 
-  const handleTextTopChange = (event) => {
+  const handleTopTextChange = (event) => {
     setTopText(event.target.value);
   };
 
-  const handleTextBottomChange = (event) => {
+  const handleBottomTextChange = (event) => {
     setBottomText(event.target.value);
   };
 
@@ -28,20 +27,42 @@ const MemeGenerator = () => {
 
   return (
     <div className="meme-generator">
-      <ImageCanvas selectedTemplate={selectedTemplate} />
-      <label htmlFor="template-select">Select a template:</label>
-      <div className="template-list-container-generator">
-        <TemplateList setSelectedTemplate={handleTemplateSelect} />
-      </div>
-      <div className="text-input-container">
-        <InputText
-          topText={topText}
-          setTopText={handleTextTopChange}
-          bottomText={bottomText}
-          setBottomText={handleTextBottomChange}
-        />
-      </div>
-      <button type="submit">Create Meme</button>
+      <form onSubmit={handleSubmit}>
+        <div className="meme-editing">
+          <div className="text-input-container">
+            <div className="text-input-top">
+              <label htmlFor="text-top">Top text:</label>
+              <input
+                type="text"
+                id="text-top"
+                value={topText}
+                onChange={handleTopTextChange}
+              />
+            </div>
+            <div className="text-input-bottom">
+              <label htmlFor="text-bottom">Bottom text:</label>
+              <input
+                type="text"
+                id="text-bottom"
+                value={bottomText}
+                onChange={handleBottomTextChange}
+              />
+            </div>
+          </div>
+          <div className="image-canvas-container">
+            <ImageCanvas
+              selectedTemplate={selectedTemplate}
+              topText={topText}
+              bottomText={bottomText}
+            />
+          </div>
+        </div>
+        <label htmlFor="template-select">Select a template:</label>
+        <div className="template-list-container-generator">
+          <TemplateList setSelectedTemplate={handleTemplateSelect} />
+        </div>
+        <button type="submit">Create Meme</button>
+      </form>
     </div>
   );
 };

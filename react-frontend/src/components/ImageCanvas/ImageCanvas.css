@@ -18,5 +18,7 @@ canvas {
   border-radius: 10px;
   border: 1px solid gray;
   font-family: 'Anton', serif;
+  max-height: 500px;
+  max-width: 500px;
 }
 

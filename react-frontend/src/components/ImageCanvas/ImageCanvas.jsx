@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import "./ImageCanvas.css";
-import InputText from "../GeneratorInput/InputText.jsx";
 
 const ImageCanvas = (props) => {
-  const {fontSize, fontColor, fontFamily } = props;
-  const [canvasSize, setCanvasSize] = useState({width: 500, height: 350});
-  const text = "Hello World";
+  const { fontSize, fontColor, fontFamily } = props;
+  const [canvasSize, setCanvasSize] = useState({ width: 500, height: 350 });
+  const text = props.topText;
 
   const canvasRef = React.useRef(null);
 
@@ -27,7 +26,14 @@ const ImageCanvas = (props) => {
       context.textAlign = "center";
       context.fillText(text, canvas.width / 2, canvas.height / 2);
     };
-  }, [props.selectedTemplate, canvasSize, fontSize, fontColor, fontFamily, text]);
+  }, [
+    props.selectedTemplate,
+    canvasSize,
+    fontSize,
+    fontColor,
+    fontFamily,
+    text,
+  ]);
 
   const handleImageLoad = (event) => {
     const canvas = canvasRef.current;
@@ -35,19 +41,21 @@ const ImageCanvas = (props) => {
     const aspectRatio = imageObj.width / imageObj.height;
     const canvasWidth = 500;
     const canvasHeight = canvasWidth / aspectRatio;
-    setCanvasSize({width: canvasWidth, height: canvasHeight});
+    setCanvasSize({ width: canvasWidth, height: canvasHeight });
     const context = canvas.getContext("2d");
     context.clearRect(0, 0, canvas.width, canvas.height);
-  }
+  };
 
   return (
     <div className="image-inputs-and-canvas ">
       <div className="image-canvas">
-        <div className="input-container">
-          <InputText />
-        </div>
         <canvas ref={canvasRef} width={500} height={350} />
-        <img onLoad={handleImageLoad} src={`http://localhost:3001/${props.selectedTemplate.path}`} alt="Selected template" style={{display: "none"}} />
+        <img
+          onLoad={handleImageLoad}
+          src={`http://localhost:3001/${props.selectedTemplate.path}`}
+          alt="Selected template"
+          style={{ display: "none" }}
+        />
       </div>
     </div>
   );

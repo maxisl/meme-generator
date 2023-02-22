@@ -1,3 +1,4 @@
+/*
 import React, { useState } from "react";
 import "./InputText.css";
 
@@ -5,12 +6,16 @@ const InputText = (props) => {
   const [textTop, setTextTop] = useState("");
   const [textBottom, setTextBottom] = useState("");
 
-  const handleTextTopChange = () => {
-    props.setTopText(textTop);
-  };
+  console.log("props", props);
+
 
   const handleTextBottomChange = () => {
     props.setBottomText(textBottom);
+  };
+
+  const handleTextTopChange = (event) => {
+    setTextTop(event.target.value);
+    props.setTopText(event.target.value);
   };
 
   const handleSubmit = (event) => {
@@ -45,3 +50,4 @@ const InputText = (props) => {
 };
 
 export default InputText;
+*/
