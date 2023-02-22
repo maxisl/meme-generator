@@ -7,6 +7,10 @@ const ImageCanvas = (props) => {
   const topText = props.topText;
   const bottomText = props.bottomText;
   const fontSize = props.textSize;
+  const positionXBottom = props.textXBottom;
+  const positionYBottom = props.textYBottom;
+  const positionXTop = props.textXTop;
+  const positionYTop = props.textYTop;
 
   const canvasRef = React.useRef(null);
 
@@ -26,8 +30,8 @@ const ImageCanvas = (props) => {
       context.font = `${fontSize}px ${fontFamily}`;
       context.fillStyle = fontColor;
       context.textAlign = "center";
-      context.fillText(bottomText, canvas.width / 2, (canvas.height / 3) * 2);
-      context.fillText(topText, canvas.width / 2, canvas.height / 3);
+      context.fillText(bottomText, positionXBottom, positionYBottom);
+      context.fillText(topText, positionXTop, positionYTop);
     };
   }, [
     props.selectedTemplate,

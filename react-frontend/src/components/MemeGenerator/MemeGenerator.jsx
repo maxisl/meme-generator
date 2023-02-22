@@ -121,6 +121,10 @@ const MemeGenerator = () => {
               topText={topText}
               bottomText={bottomText}
               textSize={fontSize}
+              textXBottom={positionBottomX}
+              textYBottom={positionBottomY}
+              textXTop={positionTopX}
+              textYTop={positionTopY}
             />
           </div>
         </div>
