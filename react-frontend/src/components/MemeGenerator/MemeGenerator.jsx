@@ -25,15 +25,22 @@ const MemeGenerator = () => {
     setBottomText(event.target.value);
   };
 
+  const handleFontSizeChange = (event) => {
+    setFontSize(event.target.value);
+  };
+
   const handleXBottomChange = (event) => {
     setPositionBottomX(event.target.value);
   };
+
   const handleYBottomChange = (event) => {
     setPositionBottomY(event.target.value);
   };
+
   const handleXTopChange = (event) => {
     setPositionTopX(event.target.value);
   };
+
   const handleYTopChange = (event) => {
     setPositionTopY(event.target.value);
   };
@@ -58,6 +65,22 @@ const MemeGenerator = () => {
                 onChange={handleTopTextChange}
               />
             </div>
+            <div className="position-top">
+              <label htmlFor="position-x-top">x: </label>
+              <input
+                type="text"
+                id="position-x-top"
+                value={positionTopX}
+                onChange={handleXTopChange}
+              />
+              <label htmlFor="position-y-top">y: </label>
+              <input
+                type="text"
+                id="position-y-top"
+                value={positionTopY}
+                onChange={handleYTopChange}
+              />
+            </div>
             <div className="text-input-bottom">
               <label htmlFor="text-bottom">Bottom text:</label>
               <input
@@ -67,16 +90,22 @@ const MemeGenerator = () => {
                 onChange={handleBottomTextChange}
               />
             </div>
-            <div className="position-x-bottom">
-              <label htmlFor="position-x-bottom">x bottom:</label>
+            <div className="position-bottom">
+              <label htmlFor="position-x-bottom">x: </label>
               <input
                 type="text"
                 id="position-x-bottom"
                 value={positionBottomX}
-                onChange={handleBottomTextChange}
+                onChange={handleXBottomChange}
+              />
+              <label htmlFor="position-y-bottom">y: </label>
+              <input
+                type="text"
+                id="position-y-bottom"
+                value={positionBottomY}
+                onChange={handleYBottomChange}
               />
             </div>
-
             <div className="font-size-input">
               <label htmlFor="font-size">Text Size: </label>
               <input

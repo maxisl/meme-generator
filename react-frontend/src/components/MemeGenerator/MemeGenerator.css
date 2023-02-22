@@ -6,7 +6,7 @@
   margin: 20px;
 }
 
-.image-canvas-container{
+.image-canvas-container {
   background: white;
   border-radius: 10px;
   border: 1px solid gray;
@@ -22,7 +22,7 @@
   border-radius: 10px;
 }
 
-.text-input-container{
+.text-input-container {
   text-align: left;
   margin: 20px;
 }
@@ -62,3 +62,12 @@
   flex: 1;
 }
 
+.position-bottom .position-top{
+  display: flex;
+  flex-direction: row;
+  margin: 20px;
+}
+
+.position-bottom .position-top input {
+  width: 10%;
+}
