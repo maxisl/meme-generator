@@ -14,7 +14,7 @@ now.setTime(Date.now() + 1 * 60 * 60 * 1000);
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     // destination callback with path
-    cb(null, "./uploads/");
+    cb(null, "./uploads/templates");
   },
   filename: function (req, file, cb) {
     // generate a "unique" name

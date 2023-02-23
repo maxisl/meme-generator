@@ -65,12 +65,38 @@ const ImageCanvas = (props) => {
     html2canvas(canvas).then(function (canvas) {
       const link = document.createElement("a");
       document.body.appendChild(link);
+      // TODO enable setting a custom name for the meme
       link.download = "meme.png";
       link.href = canvas.toDataURL();
       link.click();
       document.body.removeChild(link);
+
+      // Convert canvas data to blob
+      canvas.toBlob((blob) => {
+        const formData = new FormData();
+        const author = "63c9a9a5abd0048bf96855a6";
+        const name = "Template 1";
+        formData.append("image", blob, "meme.png");
+        formData.append("author", author);
+        formData.append("name", name);
+
+        // Send POST request to store the template
+        fetch("http://localhost:3001/templates", {
+          method: "POST",
+          body: {formData},
+        })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Failed to store template.");
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+      });
     });
   };
+
 
   return (
     <div className="image-inputs-and-canvas ">
