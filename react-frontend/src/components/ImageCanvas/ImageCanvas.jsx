@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./ImageCanvas.css";
 import html2canvas from "html2canvas";
+import axios from "axios";
 
 const ImageCanvas = (props) => {
   const { fontColor, fontFamily } = props;
@@ -75,28 +76,23 @@ const ImageCanvas = (props) => {
       canvas.toBlob((blob) => {
         const formData = new FormData();
         const author = "63c9a9a5abd0048bf96855a6";
-        const name = "Template 1";
+        const title = "Template 1";
         formData.append("image", blob, "meme.png");
         formData.append("author", author);
-        formData.append("name", name);
+        formData.append("title", title);
 
-        // Send POST request to store the template
-        fetch("http://localhost:3001/templates", {
-          method: "POST",
-          body: {formData},
-        })
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error("Failed to store template.");
-          }
-        })
-        .catch((error) => {
-          console.error(error);
-        });
+        // Send POST request to store the template using Axios
+        axios
+          .post("http://localhost:3001/memes", formData)
+          .then((response) => {
+            console.log("Meme stored successfully", response.data);
+          })
+          .catch((error) => {
+            console.error("Failed to store meme", error);
+          });
       });
     });
   };
-
 
   return (
     <div className="image-inputs-and-canvas ">

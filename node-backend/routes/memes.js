@@ -221,7 +221,7 @@ router.post("/", upload.single("image"), async (req, res) => {
   }*/
   const meme = new Meme({
     _id: new mongoose.Types.ObjectId(),
-    author: req.body._id,
+    author: req.body.author,
     title: req.body.title,
     path: req.file.path,
     filename: fileName,/*
