@@ -80,11 +80,10 @@ router.post("/register", async (req, res) => {
 // LOGIN USER
 router.post("/login", async (req, res) => {
   try {
-    const name = req.body.name;
     const email = req.body.email;
     const password = req.body.password;
 
-    if (!email || !password || !name) {
+    if (!email || !password) {
       return res
         .status(400)
         .json({ Error: "Not all required arguments supplied" });
@@ -102,7 +101,7 @@ router.post("/login", async (req, res) => {
       return res.status(401).json({ Error: "Incorrect password or username" });
     } else {
       const token = jwt.sign(
-        { id: user._id, name: user.name, email: user.email },
+        { id: user._id, email: user.email },
         process.env.JWT_SECRET,
         { expiresIn: "1d" }
       );
