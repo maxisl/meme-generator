@@ -95,17 +95,21 @@ const ImageCanvas = (props) => {
   };
 
   return (
-    <div className="image-inputs-and-canvas ">
-      <div className="image-canvas">
-        <canvas ref={canvasRef} width={500} height={350} />
-        <img
-          onLoad={handleImageLoad}
-          src={`http://localhost:3001/${props.selectedTemplate.path}`}
-          alt="Selected template"
-          style={{ display: "none" }}
-        />
+    <div className="image-inputs-and-canvas">
+      <div className="image-canvas-container">
+        <div className="image-canvas">
+          <canvas ref={canvasRef} width={500} height={350} />
+          <img
+            onLoad={handleImageLoad}
+            src={`http://localhost:3001/${props.selectedTemplate.path}`}
+            alt="Selected template"
+            style={{ display: "none" }}
+          />
+        </div>
       </div>
-      <button onClick={handleDownload}>Generate Meme</button>
+      <button onClick={handleDownload} style={{ marginTop: "20px" }}>
+        Generate Meme
+      </button>
     </div>
   );
 };

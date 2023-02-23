@@ -6,13 +6,6 @@
   margin: 20px;
 }
 
-.image-canvas-container {
-  background: white;
-  border-radius: 10px;
-  border: 1px solid gray;
-  width: 600px;
-  height: 80%;
-}
 
 .template-list-container-generator {
   width: 100%;
@@ -82,5 +75,12 @@
 .position-top input,
 .position-bottom input {
   width: 10%;
+}
+
+label[for="template-select"]{
+  margin-top: 10px;
+  font-weight: bold;
+  font-size: 18px;
+  color: #333;
 }
 
