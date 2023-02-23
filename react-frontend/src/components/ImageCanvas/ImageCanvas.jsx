@@ -33,8 +33,8 @@ const ImageCanvas = (props) => {
       context.font = `${fontSize}px ${fontFamily}`;
       context.fillStyle = fontColor;
       context.textAlign = "center";
-      context.fillText(bottomText, positionXBottom, positionYBottom);
       context.fillText(topText, positionXTop, positionYTop);
+      context.fillText(bottomText, positionXBottom, positionYBottom);
     };
   }, [
     props.selectedTemplate,

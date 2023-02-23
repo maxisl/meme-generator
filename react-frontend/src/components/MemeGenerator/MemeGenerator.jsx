@@ -9,9 +9,9 @@ const MemeGenerator = () => {
   const [bottomText, setBottomText] = useState("");
   const [fontSize, setFontSize] = useState(50);
   const [positionBottomX, setPositionBottomX] = useState(250);
-  const [positionBottomY, setPositionBottomY] = useState(150);
+  const [positionBottomY, setPositionBottomY] = useState(350);
   const [positionTopX, setPositionTopX] = useState(250);
-  const [positionTopY, setPositionTopY] = useState(350);
+  const [positionTopY, setPositionTopY] = useState(150);
 
   const handleTemplateSelect = (template) => {
     setSelectedTemplate(template);
