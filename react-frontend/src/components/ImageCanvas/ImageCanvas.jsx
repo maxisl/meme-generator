@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./ImageCanvas.css";
+import html2canvas from "html2canvas";
 
 const ImageCanvas = (props) => {
   const { fontColor, fontFamily } = props;
@@ -18,6 +19,7 @@ const ImageCanvas = (props) => {
     const canvas = canvasRef.current;
     const context = canvas.getContext("2d");
     const imageObj = new Image();
+    imageObj.crossOrigin = "anonymous";
     imageObj.src = `http://localhost:3001/${props.selectedTemplate.path}`;
     imageObj.onload = () => {
       const aspectRatio = imageObj.width / imageObj.height;
@@ -40,7 +42,11 @@ const ImageCanvas = (props) => {
     fontColor,
     fontFamily,
     topText,
-    bottomText
+    bottomText,
+    positionXBottom,
+    positionYBottom,
+    positionXTop,
+    positionYTop,
   ]);
 
   const handleImageLoad = (event) => {
@@ -54,6 +60,18 @@ const ImageCanvas = (props) => {
     context.clearRect(0, 0, canvas.width, canvas.height);
   };
 
+  const handleDownload = () => {
+    const canvas = canvasRef.current;
+    html2canvas(canvas).then(function (canvas) {
+      const link = document.createElement("a");
+      document.body.appendChild(link);
+      link.download = "meme.png";
+      link.href = canvas.toDataURL();
+      link.click();
+      document.body.removeChild(link);
+    });
+  };
+
   return (
     <div className="image-inputs-and-canvas ">
       <div className="image-canvas">
@@ -65,6 +83,7 @@ const ImageCanvas = (props) => {
           style={{ display: "none" }}
         />
       </div>
+      <button onClick={handleDownload}>Generate Meme</button>
     </div>
   );
 };
