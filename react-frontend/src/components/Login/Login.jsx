@@ -11,15 +11,18 @@ const LoginForm = ({ setIsLoggedIn }) => {
   const handleLogin = async (event) => {
     event.preventDefault();
     try {
-      const response = await axios.post("http://localhost:3001/users/login", {
+      const response = await axios.post("http://localhost:3001/auth/login", {
         email,
         password,
+        name
       });
       const token = response.data.token;
+      console.log(token);
       localStorage.setItem("token", token);
       setIsLoggedIn(true);
     } catch (error) {
       console.log(error);
+      alert(error.response.data.Error);
     }
   };
 
@@ -27,17 +30,23 @@ const LoginForm = ({ setIsLoggedIn }) => {
     event.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:3001/users/register",
+        "http://localhost:3001/auth/register",
         {
           name,
           email,
           password,
         }
       );
-      const token = response.data.token;
-      localStorage.setItem("token", token);
-      setIsLoggedIn(true);
+      const responseData = response.data;
+      if (responseData) {
+        const token = responseData.token;
+        localStorage.setItem("token", token);
+        setIsLoggedIn(true);
+      } else {
+        console.log("Response data is undefined");
+      }
     } catch (error) {
+      alert(error.response.data.error);
       console.log(error);
     }
   };
@@ -50,6 +59,7 @@ const LoginForm = ({ setIsLoggedIn }) => {
           <input
             type="email"
             id="email"
+            className= "form-input"
             value={email}
             onChange={(event) => setEmail(event.target.value)}
           />
@@ -58,12 +68,12 @@ const LoginForm = ({ setIsLoggedIn }) => {
           <label htmlFor="password">Password</label>
           <input
             type="password"
+            className= "form-input"
             id="password"
             value={password}
             onChange={(event) => setPassword(event.target.value)}
           />
         </div>
-        {isRegistering && (
           <div>
             <label htmlFor="name">Name</label>
             <input
@@ -73,7 +83,6 @@ const LoginForm = ({ setIsLoggedIn }) => {
               onChange={(event) => setName(event.target.value)}
             />
           </div>
-        )}
         <div>
           <button
             type="submit"

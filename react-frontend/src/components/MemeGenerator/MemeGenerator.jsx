@@ -49,7 +49,6 @@ const MemeGenerator = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // TODO: Generate and upload the meme image
   };
 
   return (

@@ -67,7 +67,7 @@ router.post("/register", async (req, res) => {
       if (error.name === "MongoError" && error.code === 11000) {
         return res.status(409).send({ error: "Email already exists" });
       }
-      return res.status(422).send(error.errors.email.message);
+      return res.status(422).send({error: "Username or email not unique"});
     } else {
       console.log(user);
       res.status(201).json({
