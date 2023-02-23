@@ -16,10 +16,6 @@ const memeSchema = new Schema({
     type: String,
     required: true,
   },
-  image: {
-    type: String, //  could be of type String, which is used to store a URL or file path to the image. Alternatively, store the image data as a Buffer or Binary data type
-    required: true,
-  },
   tags: [
     {
       type: String,
@@ -68,6 +64,12 @@ const memeSchema = new Schema({
   template: {
     ref: "Template",
     type: mongoose.Schema.Types.ObjectId,
+  },
+  filename: {
+    type: String,
+  },
+  path: {
+    type: String,
   },
 });
 

@@ -1,13 +1,43 @@
-var express = require("express");
-var router = express.Router();
+const express = require("express");
+const router = express.Router();
 const Meme = require("../models/meme");
 const User = require("../models/user");
 const mongoose = require("mongoose");
+const multer = require("multer");
+const { nanoid } = require("nanoid");
+const mime = require("mime-types");
 
 // change now to current timestamp in the GMT+1 time zone
 const now = new Date();
 // add 1 hour to get correct timestamp
 now.setTime(Date.now() + 1 * 60 * 60 * 1000);
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    // destination callback with path
+    cb(null, "./uploads/memes");
+  },
+  filename: function (req, file, cb) {
+    // generate a "unique" name
+    let id = nanoid();
+    // need to use the file's mimetype because the file name may not have an extension at all
+    let ext = mime.extension(file.mimetype);
+    cb(null, `${id}.${ext}`);
+  },
+});
+
+const uploadFilter = (req, file, cb) => {
+  if (file.mimetype === "image/jpeg" || file.mimetype === "image/png") {
+    cb(null, true);
+  } else {
+    cb(new Error("Filetype not accepted"), false);
+  }
+};
+
+const upload = multer({
+  storage: storage,
+  fileFilter: uploadFilter,
+});
 
 /* TODO GET memes listing. */
 /*router.get('/', function(req, res, next) {
@@ -181,20 +211,24 @@ TODO MEMES POST
  *         description: Internal Server Error
  */
 // POST MEME
-router.post("/", async (req, res) => {
-  // Check if the user exists in the User collection
-  const user = await User.findById(req.body.author);
+router.post("/", upload.single("image"), async (req, res) => {
+  console.log(req.file);
+  const originalName = req.file.filename || req.file.originalname;
+  const fileName = `${originalName}`;
+  /*const user = await User.findById(req.body._id);
   if (!user) {
     return res.status(404).json({ message: "User not found" });
-  }
+  }*/
   const meme = new Meme({
     _id: new mongoose.Types.ObjectId(),
-    author: req.body.author,
+    author: req.body._id,
     title: req.body.title,
-    image: req.body.image,
+    path: req.file.path,
+    filename: fileName,/*
     tags: req.body.tags,
-    comments: req.body.comments,
+    comments: req.body.comments,*/
   });
+  console.log(meme);
   try {
     const savedMeme = await meme.save();
     res.send(savedMeme);
@@ -289,7 +323,9 @@ router.post("/like/:id", async (req, res) => {
       return res.status(404).json({ error: "User not found" });
     }
     // check if already liked
-    if (meme.likes.find(like => like.liked_by.toString() === req.body.liker)) {
+    if (
+      meme.likes.find((like) => like.liked_by.toString() === req.body.liker)
+    ) {
       return res.status(400).json({ error: "User already liked this meme" });
     }
     meme.likes.push({ liked_by: req.body.liker });
