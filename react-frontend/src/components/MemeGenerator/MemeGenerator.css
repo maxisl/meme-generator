@@ -17,7 +17,6 @@
 
 .text-input-container {
   text-align: right;
-  margin: 20px;
 }
 
 .text-input-container label {
@@ -27,7 +26,6 @@
   font-size: 18px;
   color: #333;
   margin-right: 10px;
-  margin-top: 5px;
 }
 
 .text-input-container input {

@@ -1,0 +1,35 @@
+.login-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.login-form form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.login-form label {
+  font-size: 18px;
+  margin-top: 16px;
+}
+
+.login-form input {
+  width: 100%;
+  padding: 8px;
+  margin-top: 8px;
+  border-radius: 8px;
+  border: none;
+  background-color: #f3f3f3;
+  font-size: 16px;
+}
+
+.login-form__button-container {
+  display: flex;
+  justify-content: space-evenly;
+  margin-top: 16px;
+  width: 100%;
+}
