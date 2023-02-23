@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import "./Login.css";
 
-const LoginForm = ({ setIsLoggedIn }) => {
+const LoginForm = ({ setIsLoggedIn, setUserName }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
@@ -18,6 +18,9 @@ const LoginForm = ({ setIsLoggedIn }) => {
       const token = response.data.token;
       console.log(token);
       localStorage.setItem("token", token);
+      const userName = email.split('@')[0]; // get username from email
+      setUserName(userName);
+      console.log(userName);
       setIsLoggedIn(true);
     } catch (error) {
       console.log(error);

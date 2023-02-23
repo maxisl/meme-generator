@@ -5,9 +5,11 @@ import MemeList from "./components/MemeList/MemeList.jsx";
 import MemeGenerator from "./components/MemeGenerator/MemeGenerator.jsx";
 import Login from "./components/Login/Login.jsx";
 import LogoutButton from "./components/Login/LogoutButton.jsx";
+import UploadTemplateButton from "./components/Template/UploadTemplateButton.jsx";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userName, setUserName] = useState("");
 
   return (
     <div className="App">
@@ -17,14 +19,23 @@ function App() {
         </div>
         <div className="Login">
           {isLoggedIn ? (
-            <LogoutButton setIsLoggedIn={setIsLoggedIn} />
+            <div>
+              <p>Welcome {userName}!</p>
+              <LogoutButton
+                setIsLoggedIn={setIsLoggedIn}
+                setUserName={setUserName}
+              />
+            </div>
           ) : (
-            <Login setIsLoggedIn={setIsLoggedIn} />
+            <Login setIsLoggedIn={setIsLoggedIn} setUserName={setUserName} />
           )}
         </div>
       </div>
       <div className="card">
-        <MemeGenerator />
+        <div className="meme-generator-and-upload">
+          <MemeGenerator />
+          <UploadTemplateButton isLoggedIn={isLoggedIn} />
+        </div>
         <MemeList />
       </div>
     </div>
