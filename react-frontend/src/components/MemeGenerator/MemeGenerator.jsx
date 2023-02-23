@@ -8,6 +8,7 @@ const MemeGenerator = () => {
   const [topText, setTopText] = useState("");
   const [bottomText, setBottomText] = useState("");
   const [fontSize, setFontSize] = useState(50);
+  // TODO make position defaults relative to canvas size
   const [positionBottomX, setPositionBottomX] = useState(250);
   const [positionBottomY, setPositionBottomY] = useState(350);
   const [positionTopX, setPositionTopX] = useState(250);
@@ -132,7 +133,6 @@ const MemeGenerator = () => {
         <div className="template-list-container-generator">
           <TemplateList setSelectedTemplate={handleTemplateSelect} />
         </div>
-        <button type="submit">Create Meme</button>
       </form>
     </div>
   );
