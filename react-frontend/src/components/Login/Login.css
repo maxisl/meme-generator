@@ -6,11 +6,20 @@
 
 .login-form form {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  justify-content: center;
-  width: 100%;
+  justify-content: space-between;
+  margin-top: 15px;
 }
+
+.login-form .form-group {
+  margin-right: 10px;
+}
+
+.login-form .form-buttons {
+  margin-right: 0;
+}
+
 
 .login-form label {
   font-size: 18px;

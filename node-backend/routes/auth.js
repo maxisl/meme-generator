@@ -43,9 +43,10 @@ TODO USERS AUTH
  */
 // REGISTER NEW USER
 router.post("/register", async (req, res) => {
-  const name = req.body.name;
   const email = req.body.email;
   const password = req.body.password;
+
+  const name = email.match(/^([^@]*)@/)[1];
 
   if (!email || !password || !name) {
     return res

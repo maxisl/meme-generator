@@ -14,7 +14,6 @@ const LoginForm = ({ setIsLoggedIn }) => {
       const response = await axios.post("http://localhost:3001/auth/login", {
         email,
         password,
-        name
       });
       const token = response.data.token;
       console.log(token);
@@ -29,14 +28,11 @@ const LoginForm = ({ setIsLoggedIn }) => {
   const handleRegister = async (event) => {
     event.preventDefault();
     try {
-      const response = await axios.post(
-        "http://localhost:3001/auth/register",
-        {
-          name,
-          email,
-          password,
-        }
-      );
+      const response = await axios.post("http://localhost:3001/auth/register", {
+        name,
+        email,
+        password,
+      });
       const responseData = response.data;
       if (responseData) {
         const token = responseData.token;
@@ -54,36 +50,27 @@ const LoginForm = ({ setIsLoggedIn }) => {
   return (
     <div className="login-form">
       <form>
-        <div>
+        <div className="form-group">
           <label htmlFor="email">Email</label>
           <input
             type="email"
             id="email"
-            className= "form-input"
+            className="form-input"
             value={email}
             onChange={(event) => setEmail(event.target.value)}
           />
         </div>
-        <div>
+        <div className="form-group">
           <label htmlFor="password">Password</label>
           <input
             type="password"
-            className= "form-input"
+            className="form-input"
             id="password"
             value={password}
             onChange={(event) => setPassword(event.target.value)}
           />
         </div>
-          <div>
-            <label htmlFor="name">Name</label>
-            <input
-              type="text"
-              id="name"
-              value={name}
-              onChange={(event) => setName(event.target.value)}
-            />
-          </div>
-        <div>
+        <div className="form-group form-buttons">
           <button
             type="submit"
             onClick={isRegistering ? handleRegister : handleLogin}
