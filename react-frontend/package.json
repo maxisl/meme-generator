@@ -16,7 +16,8 @@
     "dev": "vite",
     "build-vite": "vite build",
     "preview": "vite preview",
-    "start": "concurrently \"vite\" \"vite --open\"",
+    "start": "cross-env BROWSER=chrome npm run open",
+    "open": "concurrently \"vite\" \"sleepms 1000 && open http://localhost:5173/\"",
     "lint": "eslint \"src/**/*.{js,jsx}\" --quiet"
   },
   "devDependencies": {
@@ -24,10 +25,12 @@
     "@types/react-dom": "^18.0.10",
     "@vitejs/plugin-react": "^3.1.0",
     "concurrently": "^7.6.0",
+    "cross-env": "^7.0.3",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-jsx-a11y": "^6.6.1",
     "eslint-plugin-react": "^7.31.8",
     "eslint-plugin-react-hooks": "^4.6.0",
+    "sleep-ms": "^2.0.1",
     "vite": "^4.1.0"
   }
 }

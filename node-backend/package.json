@@ -4,7 +4,7 @@
   "private": false,
   "scripts": {
     "startdev": "nodemon ./bin/www",
-    "start": "SET DBPORT=65535 && node ./bin/www.js"
+    "start": "nodemon ./bin/www"
   },
   "dependencies": {
     "bcrypt": "^5.1.0",
