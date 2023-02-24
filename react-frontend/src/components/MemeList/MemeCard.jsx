@@ -21,8 +21,10 @@ function MemeCard(props) {
       axios
         .get(`http://localhost:3001/memes/${props.meme._id}`)
         .then((response) => {
-          setMeme(response.data); // pass response data here
-          fetchAuthor(response.data.author);
+          if (response !== null) {
+            setMeme(response.data); // pass response data here
+            // fetchAuthor(response.data.author);
+          }
         });
     } catch (error) {
       console.log(error);
@@ -37,7 +39,7 @@ function MemeCard(props) {
     <div className="meme-card">
       <div className="meme-card__image-container">
         <img
-          src={`http://localhost:3001/${meme.path}`}
+          src={""/*`http://localhost:3001/${meme.path}`*/}
           alt={meme.title}
           className="meme-card__image"
         />

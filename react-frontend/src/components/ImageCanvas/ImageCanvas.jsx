@@ -16,12 +16,16 @@ const ImageCanvas = (props) => {
 
   const canvasRef = React.useRef(null);
 
+  console.log("current template: " + props.selectedTemplate);
+
   React.useEffect(() => {
     const canvas = canvasRef.current;
     const context = canvas.getContext("2d");
     const imageObj = new Image();
     imageObj.crossOrigin = "anonymous";
-    imageObj.src = `http://localhost:3001/${props.selectedTemplate.path}`;
+    if (props.selectedTemplate !== "") {
+      imageObj.src = `http://localhost:3001/${props.selectedTemplate.path}`;
+    }
     imageObj.onload = () => {
       const aspectRatio = imageObj.width / imageObj.height;
       const canvasWidth = canvasSize.width;
@@ -99,12 +103,14 @@ const ImageCanvas = (props) => {
       <div className="image-canvas-container">
         <div className="image-canvas">
           <canvas ref={canvasRef} width={500} height={350} />
-          <img
-            onLoad={handleImageLoad}
-            src={`http://localhost:3001/${props.selectedTemplate.path}`}
-            alt="Selected template"
-            style={{ display: "none" }}
-          />
+          {props.selectedTemplate && (
+            <img
+              onLoad={handleImageLoad}
+              src={`http://localhost:3001/${props.selectedTemplate.path}`}
+              alt="Selected template"
+              style={{ display: "none" }}
+            />
+          )}
         </div>
       </div>
       <button onClick={handleDownload} style={{ marginTop: "20px" }}>
