@@ -52,7 +52,7 @@ function MemeCard(props) {
         <h2 className="meme-card__title">{meme.title}</h2>
         <p className="meme-card__author">Author: {author}</p>
         {/*<p className="meme-card__tags">Tags: {meme.tags.join(", ")}</p>*/}
-        <p className="meme-card__likes">Likes: {meme.likeCount}</p>
+        {/*<p className="meme-card__likes">Likes: {meme.likeCount}</p>*/}
         {/*<p className="meme-card__comments">Comments: {meme.commentCount}</p>*/}
       </div>
     </div>

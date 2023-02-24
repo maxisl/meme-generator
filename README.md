@@ -1,5 +1,9 @@
 # MemeMuc Launcher
 
+Info for submission:
+Only additional files are the logo of the app (can be found under /react-frontend/public/logo.png) and the templates which can be found under (/node-backend/uploads/templates/).
+``` 
+
 This repository is a _template_ to unify the meme generator bonus project submissions for the _Online Multimedia Lecture_ in the winter semester 2022/23 at LMU Munich.
 
 Any submission must be runnable without additional adaptions by executing
