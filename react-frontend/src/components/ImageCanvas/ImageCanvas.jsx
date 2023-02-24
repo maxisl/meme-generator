@@ -16,8 +16,6 @@ const ImageCanvas = (props) => {
 
   const canvasRef = React.useRef(null);
 
-  console.log("current template: " + props.selectedTemplate);
-
   React.useEffect(() => {
     const canvas = canvasRef.current;
     const context = canvas.getContext("2d");

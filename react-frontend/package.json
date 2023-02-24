@@ -16,7 +16,7 @@
     "dev": "vite",
     "build-vite": "vite build",
     "preview": "vite preview",
-    "start": "cross-env BROWSER=chrome npm run open",
+    "start": "npm run open",
     "open": "concurrently \"vite\" \"sleepms 1000 && open http://localhost:5173/\"",
     "lint": "eslint \"src/**/*.{js,jsx}\" --quiet"
   },
