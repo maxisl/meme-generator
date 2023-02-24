@@ -5,6 +5,8 @@ const User = require("../models/user");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
+JWT_SECRET = "12h124oijij1i4j98ahsduiASDH2839JKSDihasd28";
+
 /*
 TODO USERS AUTH
 1. RegisterUser                   (/register)
@@ -103,7 +105,7 @@ router.post("/login", async (req, res) => {
     } else {
       const token = jwt.sign(
         { id: user._id, email: user.email },
-        process.env.JWT_SECRET,
+        JWT_SECRET,
         { expiresIn: "1d" }
       );
       res.status(201).json({
