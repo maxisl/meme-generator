@@ -9,8 +9,10 @@ now.setTime(Date.now() + 1 * 60 * 60 * 1000);
 const templateSchema = new Schema({
   _id: mongoose.Schema.Types.ObjectId,
   author: {
-    ref: "User",
     type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    required: false,
+    default: null,
   },
   date: {
     type: Date,

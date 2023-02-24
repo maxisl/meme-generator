@@ -79,7 +79,6 @@ const ImageCanvas = (props) => {
         const formData = new FormData();
         let author;
         author = localStorage.getItem("userId");
-        console.log("author", author);
         const title = "Meme 1";
         formData.append("image", blob, "meme.png");
         if (author !== null) {
@@ -87,7 +86,6 @@ const ImageCanvas = (props) => {
         }
         formData.append("title", title);
 
-        // Send POST request to store the template using Axios
         axios
           .post("http://localhost:3001/memes", formData)
           .then((response) => {
