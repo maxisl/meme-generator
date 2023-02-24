@@ -7,12 +7,13 @@ const MemeGenerator = () => {
   const [selectedTemplate, setSelectedTemplate] = useState("");
   const [topText, setTopText] = useState("");
   const [bottomText, setBottomText] = useState("");
+  const [memeTitle, setMemeTitle] = useState("Meme");
   const [fontSize, setFontSize] = useState(50);
-  // TODO make position defaults relative to canvas size
   const [positionBottomX, setPositionBottomX] = useState(250);
   const [positionBottomY, setPositionBottomY] = useState(350);
   const [positionTopX, setPositionTopX] = useState(250);
   const [positionTopY, setPositionTopY] = useState(150);
+  const [fontColor, setFontColor] = useState("black");
 
   const handleTemplateSelect = (template) => {
     setSelectedTemplate(template);
@@ -24,6 +25,10 @@ const MemeGenerator = () => {
 
   const handleBottomTextChange = (event) => {
     setBottomText(event.target.value);
+  };
+
+  const handleMemeTitleChange = (event) => {
+    setMemeTitle(event.target.value);
   };
 
   const handleFontSizeChange = (event) => {
@@ -46,6 +51,9 @@ const MemeGenerator = () => {
     setPositionTopY(event.target.value);
   };
 
+  const handleFontColorChange = () => {
+    setFontColor(fontColor === "black" ? "white" : "black");
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -56,6 +64,15 @@ const MemeGenerator = () => {
       <form onSubmit={handleSubmit}>
         <div className="meme-editing">
           <div className="text-input-container">
+            <div className="meme-title-input">
+              <label htmlFor="meme-title">Meme title:</label>
+              <input
+                type="text"
+                id="meme-title"
+                value={memeTitle}
+                onChange={handleMemeTitleChange}
+              />
+            </div>
             <div className="text-input-top">
               <label htmlFor="text-top">Top text:</label>
               <input
@@ -114,6 +131,13 @@ const MemeGenerator = () => {
                 onChange={handleFontSizeChange}
               />
             </div>
+            <label htmlFor="font-color">Use white text:</label>
+            <input
+              type="checkbox"
+              id="font-color"
+              onChange={() => setFontColor(fontColor === "black" ? "white" : "black")}
+            />
+
           </div>
           <div className="image-canvas-container">
             <ImageCanvas
@@ -125,6 +149,8 @@ const MemeGenerator = () => {
               textYTop={positionTopY}
               textXBottom={positionBottomX}
               textYBottom={positionBottomY}
+              memeTitle={memeTitle}
+              fontColor={fontColor}
             />
           </div>
         </div>

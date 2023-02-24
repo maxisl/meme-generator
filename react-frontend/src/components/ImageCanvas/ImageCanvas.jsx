@@ -4,7 +4,7 @@ import html2canvas from "html2canvas";
 import axios from "axios";
 
 const ImageCanvas = (props) => {
-  const { fontColor, fontFamily } = props;
+  const {fontFamily } = props;
   const [canvasSize, setCanvasSize] = useState({ width: 500, height: 350 });
   const topText = props.topText;
   const bottomText = props.bottomText;
@@ -13,6 +13,8 @@ const ImageCanvas = (props) => {
   const positionYBottom = props.textYBottom;
   const positionXTop = props.textXTop;
   const positionYTop = props.textYTop;
+  const fontColor = props.fontColor;
+  const memeTitle = props.memeTitle;
 
   const canvasRef = React.useRef(null);
 
@@ -69,7 +71,7 @@ const ImageCanvas = (props) => {
       const link = document.createElement("a");
       document.body.appendChild(link);
       // TODO enable setting a custom name for the meme
-      link.download = "meme.png";
+      link.download = memeTitle + ".png";
       link.href = canvas.toDataURL();
       link.click();
       document.body.removeChild(link);
@@ -79,7 +81,7 @@ const ImageCanvas = (props) => {
         const formData = new FormData();
         let author;
         author = localStorage.getItem("userId");
-        const title = "Meme 1";
+        const title = memeTitle;
         formData.append("image", blob, "meme.png");
         if (author !== null) {
           formData.append("author", author);
