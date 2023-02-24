@@ -137,7 +137,6 @@ const MemeGenerator = () => {
               id="font-color"
               onChange={() => setFontColor(fontColor === "black" ? "white" : "black")}
             />
-
           </div>
           <div className="image-canvas-container">
             <ImageCanvas

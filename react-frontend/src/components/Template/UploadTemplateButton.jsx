@@ -57,7 +57,7 @@ const UploadTemplateButton = ({ isLoggedIn }) => {
   };
 
 
-  return isLoggedIn ? (
+  return (
     <div className="upload-template">
       <label htmlFor="template-file">Upload your own Template! </label>
       <input
@@ -67,7 +67,7 @@ const UploadTemplateButton = ({ isLoggedIn }) => {
         onChange={handleFileUpload}
       />
     </div>
-  ) : null;
+  );
 };
 
 export default UploadTemplateButton;
