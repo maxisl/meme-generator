@@ -77,10 +77,14 @@ const ImageCanvas = (props) => {
       // Convert canvas data to blob
       canvas.toBlob((blob) => {
         const formData = new FormData();
-        const author = "63c9a9a5abd0048bf96855a6";
-        const title = "Template 1";
+        let author;
+        author = localStorage.getItem("userId");
+        console.log("author", author);
+        const title = "Meme 1";
         formData.append("image", blob, "meme.png");
-        formData.append("author", author);
+        if (author !== null) {
+          formData.append("author", author);
+        }
         formData.append("title", title);
 
         // Send POST request to store the template using Axios

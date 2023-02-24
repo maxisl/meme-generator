@@ -8,9 +8,13 @@ function MemeCard(props) {
 
   const fetchAuthor = async (id) => {
     try {
-      await axios.get(`http://localhost:3001/users/${id}`).then((response) => {
-        setAuthor(response.data.user.name); // pass response data here
-      });
+      if (id === null) {
+        setAuthor("unknown");
+      } else {
+        await axios.get(`http://localhost:3001/users/${id}`).then((response) => {
+          setAuthor(response.data.user.name);
+        });
+      }
     } catch (error) {
       console.log(error);
     }
@@ -23,7 +27,7 @@ function MemeCard(props) {
         .then((response) => {
           if (response !== null) {
             setMeme(response.data); // pass response data here
-            // fetchAuthor(response.data.author);
+            fetchAuthor(response.data.author);
           }
         });
     } catch (error) {
@@ -39,7 +43,7 @@ function MemeCard(props) {
     <div className="meme-card">
       <div className="meme-card__image-container">
         <img
-          src={""/*`http://localhost:3001/${meme.path}`*/}
+          src={`http://localhost:3001/${meme.path}`}
           alt={meme.title}
           className="meme-card__image"
         />
@@ -47,9 +51,9 @@ function MemeCard(props) {
       <div className="meme-card__content">
         <h2 className="meme-card__title">{meme.title}</h2>
         <p className="meme-card__author">Author: {author}</p>
-        <p className="meme-card__tags">Tags: {meme.tags.join(", ")}</p>
+        {/*<p className="meme-card__tags">Tags: {meme.tags.join(", ")}</p>*/}
         <p className="meme-card__likes">Likes: {meme.likeCount}</p>
-        <p className="meme-card__comments">Comments: {meme.commentCount}</p>
+        {/*<p className="meme-card__comments">Comments: {meme.commentCount}</p>*/}
       </div>
     </div>
   );

@@ -11,7 +11,10 @@ const memeSchema = new Schema({
   author: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
+    required: false,
+    default: null,
   },
+  //
   title: {
     type: String,
     required: true,

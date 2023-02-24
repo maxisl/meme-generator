@@ -11,6 +11,19 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userName, setUserName] = useState("");
 
+  // attach the beforeunload event listener when app starts
+  React.useEffect(() => {
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    return () => {
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+    };
+  }, []);
+
+  // clear the local storage when beforeunload event is fired
+  const handleBeforeUnload = (event) => {
+    localStorage.clear();
+  };
+
   return (
     <div className="App">
       <div className="logo-and-login">

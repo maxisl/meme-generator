@@ -11,15 +11,22 @@ const LoginForm = ({ setIsLoggedIn, setUserName }) => {
   const handleLogin = async (event) => {
     event.preventDefault();
     try {
-      const response = await axios.post("http://localhost:3001/auth/login", {
-        email,
-        password,
-      });
+      const response = await axios
+        .post("http://localhost:3001/auth/login", {
+          email,
+          password,
+        })
+      // Extract the user ID from the response object
+      const userId = response.data.user._id;
+      console.log("User Id", userId);
+      // Save the user ID to local storage
+      localStorage.setItem("userId", userId);
       const token = response.data.token;
       console.log(token);
       localStorage.setItem("token", token);
-      const userName = email.split('@')[0]; // get username from email
+      const userName = email.split("@")[0]; // get username from email
       setUserName(userName);
+      localStorage.setItem("user", userName);
       console.log(userName);
       setIsLoggedIn(true);
     } catch (error) {

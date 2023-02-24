@@ -15,8 +15,9 @@ const User = require("../models/user");
 TODO USERS GET
 1. GetAll                   (/)
 2. GetUserById              (/:id)
-3. GetUserMemes             (/memes)
-4. GetUserTemplates         (/templates.js)
+3. GetUserByName            (/:name/id)
+4. GetUserMemes             (/memes)
+5. GetUserTemplates         (/templates)
 */
 
 /**
@@ -39,6 +40,7 @@ TODO USERS GET
  *       500:
  *         description: Server error
  */
+
 // GET ALL USERS
 router.get("/", (req, res) => {
   User.find((error, users) => {
@@ -67,6 +69,21 @@ router.get("/:id", async (req, res) => {
     console.error(err);
     res.status(500).json({message: "Error getting user"});
   }
+});
+
+// GET USER BY NAME
+router.get('/users/:name/id', (req, res) => {
+  const name = req.params.name;
+  User.findOne({ name: name }, (err, user) => {
+    if (err) {
+      console.log(err);
+      res.status(500).send('Internal server error');
+    } else if (!user) {
+      res.status(404).send('User not found');
+    } else {
+      res.status(200).send(user._id);
+    }
+  });
 });
 
 /*
