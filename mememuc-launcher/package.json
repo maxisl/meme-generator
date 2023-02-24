@@ -9,7 +9,9 @@
     "startdev": "concurrently \"npm run startdev --prefix ../node-backend\" \"npm start --prefix ../react-frontend\"",
     "serverdev": "npm run startdev --prefix ../node-backend",
     "fullstackdev": "concurrently \"npm run startdev --prefix ../node-backend\" \"npm run dev --prefix ../react-frontend\"",
-    "installall": "npm install && cd ../mongoserver && npm install && cd ../node-backend && npm install && cd ../react-frontend && npm install"
+    "installall": "npm install && cd ../mongoserver && npm install && cd ../node-backend && npm install && cd ../react-frontend && npm install",
+    "postinstall": "npm run mongo:restore",
+    "mongo:restore": "mongorestore --db omm-2223 --drop ../mongoserver/mongobackup/dump/omm-2223"
   },
   "keywords": [],
   "author": "LMU Mediainformatics Group",
