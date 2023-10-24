@@ -1,5 +1,5 @@
 ## ℹ️ About
-Meme generator
+Meme Generator full-stack web app with a Node.js / MongoDB backend and a React frontend
 
 ## 💻 Developing
 1. Make sure [Node.js](https://nodejs.org/) version 18+ is installed (LTS recommended), includes npm.
