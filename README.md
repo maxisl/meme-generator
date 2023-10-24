@@ -1,80 +1,39 @@
-# MemeMuc Launcher
+## ℹ️ About
+Meme generator
 
-## Info for submission:
-Only additional files are the logo of the app (can be found under /react-frontend/public/logo.png) and the templates which can be found under (/node-backend/uploads/templates/).
+## 💻 Developing
+1. Make sure [Node.js](https://nodejs.org/) version 18+ is installed (LTS recommended), includes npm.
+2. Install recommended project extensions for your code editor (see `.vscode/extensions.json`).
+3. Install project dependencies locally (for client & server): `npm install`
+4. Start a local development server (for client & server): `npm run dev`
 
+## 🏃 Running the Project
+1. In order for the code to be able to run `mongorestore mongodb://127.0.0.1:65535 --db omm-ws2223 data` as specified within `./mongoserver/package.json` you need to have a local installation of MongoDB. The community edition suffices. It can be downloaded in the [MongoDB download center](https://www.mongodb.com/try/download/community).
+2. Finally you will just need to run `cd mememuc-launcher && npm run installall && npm start`
 
-``` 
+## 📦 Used Packages (Client)
+### Development
+| Package | License | Use |
+|:--- |:--- |:--- |
+| [Vite](https://www.npmjs.com/package/vite) | [MIT](https://github.com/vitejs/vite/blob/main/LICENSE) | Frontend Tooling (Dev Server & Bundling)
+| [MIT](https://github.com/postcss/postcss/blob/main/LICENSE) ([MIT](https://github.com/postcss/autoprefixer/blob/main/LICENSE)) | CSS post-processing (for auto browser prefixes)
+| [ESLint](https://www.npmjs.com/package/eslint) ([ESLint Plugin Svelte](https://www.npmjs.com/package/eslint-plugin-svelte)) | [MIT](https://github.com/eslint/eslint/blob/main/LICENSE) ([MIT](https://github.com/ota-meshi/eslint-plugin-svelte/blob/main/LICENSE)) | Code Linting (for Svelte)
 
-This repository is a _template_ to unify the meme generator bonus project submissions for the _Online Multimedia Lecture_ in the winter semester 2022/23 at LMU Munich.
+## Libraries
+Production:
+| Name & Link | License | Description |
+| ----------- | ------- | ----------- |
+| [Express](https://expressjs.com/) | [MIT](https://github.com/expressjs/express/blob/master/LICENSE) |Fast, unopinionated, minimalist web framework for Node.js |
+| [Mongoose](https://mongoosejs.com/) | MIT | Wrapper library for interaction with MongoDB with a schema-based data modeling approach, with built-in type casting, validation, query building and more | 
+| [Multer](https://github.com/expressjs/multer) | [MIT](https://github.com/expressjs/multer/blob/master/LICENSE) | Multer is a node.js middleware for handling multipart/form-data, which is primarily used for uploading files. It is written on top of busboy for maximum efficiency. |
+| [multer-gridfs-storage](https://github.com/devconcept/multer-gridfs-storage) | [MIT](https://github.com/devconcept/multer-gridfs-storage/blob/master/LICENSE) | GridFS storage engine for Multer to store uploaded files directly to MongoDB.
+| [cors](https://www.npmjs.com/package/cors) | MIT | cors is a middleware that can be used to enable CORS with various options. |
+| [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken) | MIT | JsonWebToken implementation for node.js |
 
-Any submission must be runnable without additional adaptions by executing
-```bash
-cd mememuc-launcher && npm run installall && npm start
-```
+During development:
+| Name & Link | License | Description |
+| ----------- | ------- | ----------- |
+| [Nodemon](https://nodemon.io/) | MIT | Monitors for any changes in source code and automatically restarts the node.js server |
+| [Dotenv](https://github.com/motdotla/dotenv) | BSD 2-Clause "Simplified" License | Zero-dependency module that loads environment variables from a .env file into process.env |
 
-The template contains two folders that are relevant to you. Your implementation is supposed to go in these two folders.
-* `./node-backend`: The backend of your project using NodeJS
-* `./react-frontend`: The front of your project using React
-
-Currently, both folder are filled with some dummy projects.
-
-When you replace the `./node-backend` dummy project with your own implementation, there are two pieces of code which you need to re-include from the dummy project:
-- In _app.js_: The block at the very top, commented with `Important`
-  ```JavaScript
-  const MONGODB_PORT = process.env.DBPORT || '27017';
-  const db = require('monk')(`127.0.0.1:${MONGODB_PORT}/omm-2223`); // connect to database omm-2223
-  console.log(`Connected to MongoDB at port ${MONGODB_PORT}`)
-  ```
-- In _package.json_: The _scripts_ block
-  ```JSON
-  "scripts": {
-    "startdev": "node ./bin/www",
-    "start": "SET DBPORT=65535 && node ./bin/www"
-  },
-  ```
-
-The other two folders __must not be changed__!
-* `./mememuc-launcher` contains configuration files for installing dependencies and launching the application you implement.
-* `./mongoserver` cotains a local in-memory database server independent of any existing local installation.
-  This database is not persistent and will reset with each restart. It is meant for testing your submission with a consistent data state, independent of the computer on which it runs.
-  You _can_ add files to the `./mongoserver/data` subdirectory.
-
-
-## How To Use
-
-### During Development
-
-During development we recommend to ruin the two project (`./node-backend` and `./react-frontend`) individually. However if you prefer, you can use the NodeJS scripts from `./mememuc-launcher` during development too, with the following commands:
-
-```
-cd mememuc-launcher
-```
-navigates your commandline into the mememuc launcher project
-
-```
-npm run installall
-```
-installs the dependencies of all (sub)projects
-
-```
-npm run startdev
-```
-starts the backend project. It will connect to a local MongoDB instance (assuming any is running on your local machine) at the default port `27017`.
-
-### How To Prepare Your Submission
-
-- Export the MongoDB database state that you want us to user for evaluating your submission from your local MongoDB as json files. You can use, e.g., the `mongoexport` command:
-`mongoexport --uri="mongodb://localhost:27017/omm-ws2223" --collection=users --out=omm-ws2223.json`
-- Put any exportet json files into the `./mongoserver/data` folder. The in-memory database server (`./mongoserver`) will import these files as default data whenever you (re)launch the project (_not implemented yet_).
-- You can test whether you application will run in the test setup using the commands below.
-
-### How We Will Test Your Submission
-
-To evaluate your submission, we will launch the following commands:
-
-```bash
-cd mememuc-launcher # Navigates your commandline into the mememuc launcher project.
-npm run installall # Installs the dependencies of all (sub)projects.
-npm start # Starts the backend project using the non-persistent in-memory MongoDB instance.
-```
+---
