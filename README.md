@@ -9,7 +9,7 @@ Meme Generator full-stack web app with a Node.js / MongoDB backend and a React f
 
 ## 🏃 Running the Project
 1. In order for the code to be able to run `mongorestore mongodb://127.0.0.1:65535 --db omm-ws2223 data` as specified within `./mongoserver/package.json` you need to have a local installation of MongoDB. The community edition suffices. It can be downloaded in the [MongoDB download center](https://www.mongodb.com/try/download/community).
-2. Finally you will just need to run `cd mememuc-launcher && npm run installall && npm start`
+2. Run `cd mememuc-launcher && npm run installall && npm start`
 
 ## 📦 Used Packages (Client)
 ### Development
